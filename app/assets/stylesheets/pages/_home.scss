@@ -1,1 +1,31 @@
 // Specific CSS for your home-page
+.home-banner {
+    background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), asset-url("store_back");
+    background-position: center;
+    background-size: cover;
+    height: 667px;
+    padding: 200px 0;
+    color: white;
+}
+
+.home-banner .home-container {
+   max-width: 800px;
+   margin: 0 auto;
+}
+
+.home-banner .home-container .home-title {
+    font-size: 60px;
+    color: white;
+    font-weight: bold;
+    margin: 0px;
+}
+
+.home-banner .home-container a {
+    text-decoration: none;
+    background-color: #1DDD87;
+    padding: 15px 30px;
+    color: white;
+    border-radius: 25px;
+    font-weight: bold;
+    display: inline-block;
+}

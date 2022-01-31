@@ -1,0 +1,10 @@
+
+<div class='review-form'>
+  <%= simple_form_for([ @product, @review ]) do |f| %>
+    <%= f.input :title %>
+    <%= f.input :content, as: :text %>
+    <div class='text-right mt-5'>
+      <%= f.button :submit, class: 'btn btn-outline-primary' %>
+    </div>
+  <% end %>
+</div>

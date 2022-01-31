@@ -1,0 +1,50 @@
+<h1>My orders</h1>
+<% a = 5 %>
+<div class=order-container>
+  <table class="order-table table">
+    <thead class="thead-dark text-center">
+      <tr>
+        <th scope="col">Nº</th>
+        <th scope="col">Product</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Total</th>
+        <th scope="col">Date</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody class='text-center'>
+      <% @orders.each_with_index do |order, index| %>
+      <tr>
+        <th scope="row"><%= index + 1 %></th>
+        <td><%= order.product.name %></td>
+        <td>$ <%= order.product.price %> </td>
+        <% @total_amount += order.product.price * order.quantity %>
+        <td><%= order.quantity %></td>
+        <td>$ <%= order.product.price * order.quantity %></td>
+        <td><%= order.created_at.to_s.slice(0, order.created_at.to_s.length - 7) %></td>
+        <td>  
+          <%= link_to "Remove",
+                  order_path(order, :order_id => order),
+                  method: :delete,
+                  class: 'order-remove',
+                  data: { confirm: "Are you sure?" } %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+    <% if @total_amount > 0 %>
+      <tfoot>
+        <tr>
+          <td style='background-color: #343A3F'></td>
+          <td style='background-color: #343A3F'></td>
+          <td style='background-color: #343A3F'></td>
+          <td class='order-total'>TOTAL</td>
+          <td class='order-total-amount'>$ <%= @total_amount %></td>
+          <td style='background-color: #343A3F'></td>
+          <td style='background-color: #343A3F'></td>
+        </tr>
+      </tfoot>
+    <% end %>
+  </table>
+</div>

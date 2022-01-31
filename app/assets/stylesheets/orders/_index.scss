@@ -1,0 +1,21 @@
+.order-container {
+    margin: 50px 100px;
+}
+
+.order-total {
+    background-color: #343A3F;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.order-total-amount {
+    text-align: center;
+    background-color: #343A3F;
+    color: white;
+    font-weight: bold;
+}
+
+.order-remove:hover {
+    color: red;
+}

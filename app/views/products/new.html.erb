@@ -1,0 +1,17 @@
+<h1>Insert new product</h1>
+
+<div class='user-form'>
+    <%= simple_form_for(@product) do |f| %>
+    <div class="form-inputs">
+        <%= f.input :sku, label: 'SKU' %>
+        <%= f.input :name %>
+        <%= f.input :description, as: :text %>
+        <%= f.input :price %>
+        <%= f.input :stock %>
+    </div>
+    
+    <div class="form-actions">
+        <%= f.submit 'Add product', class: 'btn btn-primary' %>
+    </div>
+    <% end %>
+</div>

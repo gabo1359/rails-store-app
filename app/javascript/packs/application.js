@@ -28,3 +28,21 @@ document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
   // initSelect2();
 });
+
+const likes = document.querySelector('.product-likes');
+const likeButton = document.querySelector('.btn-like');
+let helper = 0;
+
+likeButton.addEventListener('click', () => {
+  if (helper % 2 === 0) {
+    likes.textContent = '1 like';
+    likeButton.style.background = '#046CE7';
+    likeButton.style.color = 'white';
+    helper += 1;
+  } else {
+    likes.textContent = '0 likes';
+    likeButton.style.background = 'white';
+    likeButton.style.color = '#046CE7';
+    helper += 1;
+  }
+})

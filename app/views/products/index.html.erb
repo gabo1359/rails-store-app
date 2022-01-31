@@ -1,0 +1,22 @@
+<h1>Everything you need in one place!</h1>
+
+<div class="product-add">
+      <%= link_to 'Add a new product', new_product_path, class: 'btn btn-outline-primary' %>
+</div>
+
+<div class='products-container mt-5'>
+  <% @products.each do |product| %>
+    <div class="card" style="width: 18rem;">
+      <%= link_to product_path(product) do %>
+        <%= image_tag('snack_store', class: 'card-img-top', style: 'background-color: black;') %>
+      <% end %>
+      <div class="card-body">
+        <h5 class="card-title"><%= product.name %></h5>
+        <p class="card-text text-right">Price: $ <%= product.price %></p>
+        <div class='product-card-buttons'>
+          <%= link_to 'Buy product', product_path(product), class:'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

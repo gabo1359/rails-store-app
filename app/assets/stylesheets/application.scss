@@ -11,3 +11,9 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+@import './users/sign';
+@import './products/index';
+@import './products/show';
+@import './shared/navbar';
+@import './orders/index';

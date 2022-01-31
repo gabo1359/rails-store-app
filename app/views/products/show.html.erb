@@ -1,0 +1,76 @@
+<% if current_user.admin == true %>
+  <div class="product-edit-delete">
+      <%= link_to 'Edit product', edit_product_path(@product), class: 'btn btn-outline-primary' %>
+      <%= button_to "Remove product", {:controller => :products,
+                  :action => 'destroy', :id => @product.id }, :method => :delete,
+                  class: 'btn btn-outline-danger', data: { confirm: "Are you sure?" } %>
+  </div>
+<% end %>
+
+<div class='product-show-card'>
+  <%= image_tag('coca_cola', class: 'product-show-image') %>
+  <div class='product-details'>
+    <p class='product-name'><%= @product.name %></p>
+    <p class='product-description'>Description: <%= @product.description %></p>
+    <p class='product-price'>Price: $ <%= @product.price %></p>
+    <hr>
+    <div class='product-stock-likes'>
+      <p class='product-stock'>Stock: <%= @product.stock %></p>
+      <p class='product-likes'><%= pluralize @product.likes, 'like' %></p>
+      <button class='btn btn-outline-primary btn-like'>Like</button>
+    </div>
+    <hr>
+    <div class='order-buy-form'>
+      <%= simple_form_for([ @product, @order ]) do |f| %>
+        <%= f.input :quantity, input_html: { value: 1 } %>
+        <div class='text-right mt-5'>
+          <%= f.submit 'Buy', class: 'btn btn-primary btn-buy' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class='reviews-show'>
+  <% if @product.reviews.blank? %>
+    <p class='text-right'>💬 Be the first to leave a review for <%= @product.name %></p>
+  <% else %>
+    <h2>Reviews</h2>
+    <% @product.reviews.order('created_at DESC').each do |review| %>
+      <div class="card">
+        <h5 class="card-header" style='background-color: hsla(0, 0, 0, 0.05)'>
+          <p><%= "#{review.user.first_name} #{review.user.last_name}" %></p>
+          <span class='text-muted', style='font-size: 15px'>
+            <%= review.created_at.to_s.slice(0,review.created_at.to_s.length - 4) %>
+          </span>
+        </h5>
+        <div class="card-body">
+          <% if current_user.admin == true %>
+            <%= link_to "Remove",
+                  review_path(review, :product_id => review.product),
+                  method: :delete,
+                  class: 'product-remove',
+                  data: { confirm: "Are you sure?" } %>
+          <% end %>
+          <h5 class="card-title text-right"><p><%= review.title %></p></h5>
+          <p class="card-text"><p><%= review.content %></p></p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<hr>
+<div class='review-form'>
+  <p class='text-center mb-5' style='font-size: 25px'>Leave us a comment</p>
+  <%= simple_form_for([ @product, @review ], remote: true) do |f| %>
+    <%= f.input :title %>
+    <%= f.input :content, as: :text %>
+    <div class='text-right mt-5'>
+      <%= f.button :submit, class: 'btn btn-outline-primary' %>
+    </div>
+  <% end %>
+</div>
+
+
+
