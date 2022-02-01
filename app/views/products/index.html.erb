@@ -8,7 +8,7 @@
   <% @products.each do |product| %>
     <div class="card" style="width: 18rem;">
       <%= link_to product_path(product) do %>
-        <%= image_tag('snack_store', class: 'card-img-top', style: 'background-color: black;') %>
+        <%= image_tag('snack_store.png', class: 'card-img-top', style: 'background-color: black;') %>
       <% end %>
       <div class="card-body">
         <h5 class="card-title"><%= product.name %></h5>
