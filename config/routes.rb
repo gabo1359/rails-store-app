@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   end
   resources :reviews, only: [ :destroy ]
   resources :orders, only: [ :index, :destroy ]
+  get 'tags/:tag', to: 'products#index', as: :tag
 end

@@ -4,9 +4,23 @@
       <%= link_to 'Add a new product', new_product_path, class: 'btn btn-outline-primary' %>
 </div>
 
+<div class='tags-container'>
+  <% @tags.each do |tag| %>
+    <%= link_to tag, tag_path(tag), class: 'product-tag-anchor' %>
+  <% end %>
+  <%= link_to 'All products', products_path, class: 'product-tag-anchor' %>
+</div>
+
 <div class='products-container mt-5'>
   <% @products.each do |product| %>
     <div class="card" style="width: 18rem;">
+      <div class='product-tags'>
+        <% product.tags.map(&:name).each do |tag| %>
+          <p class='product-tag'>
+            <%= link_to tag, tag_path(tag), class: 'product-tag-anchor' %>
+          </p>
+        <% end %>
+      </div>
       <%= link_to product_path(product) do %>
         <%= image_tag('snack_store.png', class: 'card-img-top', style: 'background-color: black;') %>
       <% end %>

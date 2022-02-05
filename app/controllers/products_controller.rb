@@ -1,13 +1,16 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
-  skip_before_action :authenticate_user!, only: [ :index, :new, :create]
+  skip_before_action :authenticate_user!, only: [ :index, :show ]
 
   def index
     if params[:query].present?
       @products = Product.search_by_name_and_description(params[:query])
+    elsif params[:tag]
+      @products = Product.tagged_with(params[:tag])
     else
       @products = Product.where('stock > ?', 0).order('created_at DESC')
     end
+    @tags = %w[ Beverages Cereals Dairy Fats Nuts Seeds Sauces Soups Snacks Desserts Miscellaneous ]
   end
 
   def show
@@ -23,6 +26,7 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params)
     if @product.save
       redirect_to products_path
+
     else
       render :new
     end
@@ -54,6 +58,6 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:sku, :name, :description, :price, :stock)
+    params.require(:product).permit(:sku, :name, :description, :price, :stock, :tag_list)
   end
 end

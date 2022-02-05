@@ -1,11 +1,9 @@
-<% if current_user.admin == true %>
-  <div class="product-edit-delete">
-      <%= link_to 'Edit product', edit_product_path(@product), class: 'btn btn-outline-primary' %>
-      <%= button_to "Remove product", {:controller => :products,
-                  :action => 'destroy', :id => @product.id }, :method => :delete,
-                  class: 'btn btn-outline-danger', data: { confirm: "Are you sure?" } %>
-  </div>
-<% end %>
+<div class="product-edit-delete">
+  <%= link_to 'Edit product', edit_product_path(@product), class: 'btn btn-outline-primary' %>
+  <%= button_to "Remove product", {:controller => :products,
+          :action => 'destroy', :id => @product.id }, :method => :delete,
+          class: 'btn btn-outline-danger', data: { confirm: "Are you sure?" } %>
+</div>
 
 <div class='product-show-card'>
   <%= image_tag('coca_cola.png', class: 'product-show-image') %>
@@ -38,10 +36,11 @@
     <h2>Reviews</h2>
     <% @product.reviews.order('created_at DESC').each do |review| %>
       <div class="card">
+        <%= article.tags.map(&:name).map { |t| link_to t, tag_path(t) }.join(', ') %>
         <h5 class="card-header" style='background-color: hsla(0, 0, 0, 0.05)'>
           <p><%= "#{review.user.first_name} #{review.user.last_name}" %></p>
           <span class='text-muted', style='font-size: 15px'>
-            <%= review.created_at.to_s.slice(0,review.created_at.to_s.length - 4) %>
+            <%= review.created_at.utc.localtime("-05:00").strftime("%h %d, %Y - %I:%M %p") %>
           </span>
         </h5>
         <div class="card-body">
@@ -67,10 +66,15 @@
     <%= f.input :title %>
     <%= f.input :content, as: :text %>
     <div class='text-right mt-5'>
-      <%= f.button :submit, class: 'btn btn-outline-primary' %>
+      <% if user_signed_in? %>
+        <%= f.button :submit, class: 'btn btn-outline-primary' %>
+      <% end %>
     </div>
   <% end %>
+  <div class='text-right mt-5'>
+      <% if !user_signed_in? %>
+        <%= button_to "Create Review", new_user_session_path, 
+                class: 'btn btn-outline-primary' %>
+      <% end %>
+    </div>
 </div>
-
-
-

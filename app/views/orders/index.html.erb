@@ -22,7 +22,7 @@
         <% @total_amount += order.product.price * order.quantity %>
         <td><%= order.quantity %></td>
         <td>$ <%= order.product.price * order.quantity %></td>
-        <td><%= order.created_at.to_s.slice(0, order.created_at.to_s.length - 7) %></td>
+        <td><%= order.created_at.utc.localtime("-05:00").strftime("%h %d, %Y - %I:%M %p") %></td>
         <td>  
           <%= link_to "Remove",
                   order_path(order, :order_id => order),

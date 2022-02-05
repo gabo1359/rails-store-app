@@ -3,11 +3,54 @@
    text-align: right;
 }
 
+.tags-container {
+    margin: 0px 50px -10px;
+    display: flex;
+    justify-content: space-between;
+    .product-tag-anchor {
+        all: unset;
+        border: 1px solid hsla(0, 0%, 0%, 0.5);
+        color: hsla(0, 0%, 0%, 0.5);
+        border-radius: 5px;
+        padding: 0px 5px;
+    }
+    .product-tag-anchor:hover {
+        border: 1px solid hsla(0, 0%, 0%, 1);
+        color: hsla(0, 0%, 0%, 1);
+        cursor: pointer;
+    }
+}
 .products-container {
     margin: 20px 100px 40px;
     display: flex;
     gap: 24px;
     flex-wrap: wrap;
+    .card {
+        position: relative;
+        .product-tags {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            .product-tag {
+                .product-tag-anchor {
+                    all: unset;
+                }
+                opacity: 0.75;
+                margin-bottom: 2px;
+                text-align: center;
+                color: white;
+                background-color: #FD1215;
+                border-radius: 5px;
+                font-size: 10px;
+                width: 100px;
+            }
+            .product-tag:hover {
+                opacity: 1;
+                cursor: pointer;
+            }
+        }
+       
+    }
     .product-card-buttons {
         display: flex;
         justify-content: space-between;

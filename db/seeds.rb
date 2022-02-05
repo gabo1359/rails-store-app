@@ -8,15 +8,47 @@
 require 'faker'
 
 sku_letters = ('AAA'..'ZZZ').to_a
+categories = %w[ Beverages Cereals Dairy Fats Nuts Seeds Sauces Soups Snacks Desserts Miscellaneous ]
 
 Product.destroy_all
+User.destroy_all
 
-15.times do |i|
+User.create(
+  email: 'admin@applaudo.com',
+  password: '123456',
+  first_name: 'Admin',
+  last_name: 'Applaudo Studios',
+  phone: '123-456-7890',
+  address: 'Salvador',
+  admin: true
+)
+
+User.create(
+  email: 'gabriel@applaudo.com',
+  password: '123456',
+  first_name: 'Gabriel',
+  last_name: 'Llerena Quenaya',
+  phone: '123-456-7890',
+  address: 'Arequipa'
+)
+
+30.times do |i|
+  i = 0
+  tag_list = []
+  while i < 2
+    sample = categories.sample
+    if !tag_list.include? sample
+      tag_list << sample
+      i += 1
+    end
+  end
+
   Product.create({
     sku: "#{rand(1000..9999)}-#{sku_letters[rand(0...sku_letters.length)]}",
     name: Faker::Commerce.product_name,
     description: Faker::Commerce.department,
     price: rand(1..15),
-    stock: rand(10..50)
+    stock: rand(10..50),
+    tag_list: tag_list.join(', ')
   })
 end

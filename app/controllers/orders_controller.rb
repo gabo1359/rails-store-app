@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
-    before_action :set_order, only: %i[show destroy]
+  before_action :set_order, only: %i[show destroy]
+  skip_before_action :authenticate_user!, only: [ :index, :create, :destroy ]
 
   def index
     @orders = Order.all
