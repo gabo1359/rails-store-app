@@ -16,9 +16,7 @@
     <div class="card" style="width: 18rem;">
       <div class='product-tags'>
         <% product.tags.map(&:name).each do |tag| %>
-          <p class='product-tag'>
-            <%= link_to tag, tag_path(tag), class: 'product-tag-anchor' %>
-          </p>
+          <%= link_to tag, tag_path(tag), class: 'product-tag-anchor' %>
         <% end %>
       </div>
       <%= link_to product_path(product) do %>
