@@ -7,10 +7,13 @@ class ProductsController < ApplicationController
       @products = Product.search_by_name_and_description(params[:query])
     elsif params[:tag]
       @products = Product.tagged_with(params[:tag])
+    elsif params[:filter]
+      @products = Product.sort_products_by(params[:filter])
     else
       @products = Product.where('stock > ?', 0).order('created_at DESC')
     end
     @tags = %w[ Beverages Cereals Dairy Fats Nuts Seeds Sauces Soups Snacks Desserts Miscellaneous ]
+    @filters = %w[ Name-ascending Name-descending Price-ascending Price-descending ] 
   end
 
   def show

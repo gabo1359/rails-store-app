@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   resources :reviews, only: [ :destroy ]
   resources :orders, only: [ :index, :destroy ]
   get 'tags/:tag', to: 'products#index', as: :tag
+  get 'filter/:filter', to: 'products#index', as: :filter
 end

@@ -24,6 +24,15 @@ class Product < ApplicationRecord
     end
   end
 
+  def self.sort_products_by(query)
+    filter, type = query.split('-')
+    if filter == 'Name'
+      type == 'ascending' ? Product.order('name ASC') : Product.order('name DESC')
+    else
+      type == 'ascending' ? Product.order('price ASC') : Product.order('price DESC')
+    end
+  end
+
   include PgSearch::Model
   pg_search_scope :search_by_name_and_description,
     against: [ :name, :description ],

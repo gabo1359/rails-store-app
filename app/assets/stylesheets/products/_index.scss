@@ -1,6 +1,8 @@
 .product-add {
-   margin: 30px 100px 30px 0px;
-   text-align: right;
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 100px 30px 100px;
+    text-align: right;
 }
 
 .tags-container {
