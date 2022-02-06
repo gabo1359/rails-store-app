@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-class Tagging < ApplicationRecord
-  belongs_to :tag
+class Like < ApplicationRecord
   belongs_to :product
+  belongs_to :user
 end

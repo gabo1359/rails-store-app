@@ -3,7 +3,7 @@
 <div class="product-add">
   <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-      Filter by
+      Sort by
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
       <% @filters.each do |filter| %>
@@ -11,7 +11,9 @@
       <% end %>
     </div>
   </div>
-  <%= link_to 'Add a new product', new_product_path, class: 'btn btn-outline-primary' %>
+  <% if user_signed_in? && current_user.admin %>
+    <%= link_to 'Add a new product', new_product_path, class: 'btn btn-outline-primary' %>
+  <% end %>
 </div>
 
 <div class='tags-container'>
@@ -37,6 +39,7 @@
         <p class="card-text text-right">Price: $ <%= product.price %></p>
         <div class='product-card-buttons'>
           <%= link_to 'Buy product', product_path(product), class:'btn btn-primary' %>
+          <p><%= product.likes.count %> <i class="far fa-thumbs-up" style='color: #157EFB'></i></p>
         </div>
       </div>
     </div>

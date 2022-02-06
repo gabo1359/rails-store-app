@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :products do
     resources :reviews, only: :create
     resources :orders, only: :create
+    resources :likes
   end
   resources :reviews, only: [ :destroy ]
   resources :orders, only: [ :index, :destroy ]

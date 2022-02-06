@@ -1,19 +1,20 @@
+# frozen_string_literal: false
+
+# Products controller
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
-  skip_before_action :authenticate_user!, only: [ :index, :show ]
+  skip_before_action :authenticate_user!, only: %i[index show]
 
   def index
-    if params[:query].present?
-      @products = Product.search_by_name_and_description(params[:query])
-    elsif params[:tag]
-      @products = Product.tagged_with(params[:tag])
-    elsif params[:filter]
-      @products = Product.sort_products_by(params[:filter])
-    else
-      @products = Product.where('stock > ?', 0).order('created_at DESC')
-    end
-    @tags = %w[ Beverages Cereals Dairy Fats Nuts Seeds Sauces Soups Snacks Desserts Miscellaneous ]
-    @filters = %w[ Name-ascending Name-descending Price-ascending Price-descending ] 
+    @tags = %w[Beverages Cereals Dairy Fats Nuts Seeds Sauces Soups Snacks Desserts Miscellaneous]
+    @filters = %w[Name-ascending Name-descending Price-ascending Price-descending Most-liked]
+    return @products = Product.search_by_name_and_description(params[:query]) if params[:query].present?
+
+    return @products = Product.tagged_with(params[:tag]) if params[:tag]
+
+    return @products = Product.sort_products_by(params[:filter]) if params[:filter]
+
+    @products = Product.where('stock > ?', 0).order('created_at DESC')
   end
 
   def show
@@ -56,11 +57,11 @@ class ProductsController < ApplicationController
   private
 
   def set_product
-   @product = Product.find(params[:id])
+    @product = Product.find(params[:id])
   end
 
   def product_params
     params.require(:product).permit(:sku, :name, :description, :price, :stock,
-      :tag_list, :tag, { tag_ids: [] }, :tag_ids)
+                                    :tag_list, :tag, { tag_ids: [] }, :tag_ids)
   end
 end

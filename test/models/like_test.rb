@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class TaggingTest < ActiveSupport::TestCase
+class LikeTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

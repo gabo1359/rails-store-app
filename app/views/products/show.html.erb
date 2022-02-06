@@ -1,9 +1,11 @@
-<div class="product-edit-delete">
-  <%= link_to 'Edit product', edit_product_path(@product), class: 'btn btn-outline-primary' %>
-  <%= button_to "Remove product", {:controller => :products,
-          :action => 'destroy', :id => @product.id }, :method => :delete,
-          class: 'btn btn-outline-danger', data: { confirm: "Are you sure?" } %>
-</div>
+<% if user_signed_in? && current_user.admin %>
+  <div class="product-edit-delete">
+    <%= link_to 'Edit product', edit_product_path(@product), class: 'btn btn-outline-primary' %>
+    <%= button_to "Remove product", {:controller => :products,
+            :action => 'destroy', :id => @product.id }, :method => :delete,
+            class: 'btn btn-outline-danger', data: { confirm: "Are you sure?" } %>
+  </div>
+<% end %>
 
 <div class='product-show-card'>
   <%= image_tag('coca_cola.png', class: 'product-show-image') %>
@@ -15,8 +17,20 @@
     <hr>
     <div class='product-stock-likes'>
       <p class='product-stock'>Stock: <%= @product.stock %></p>
-      <p class='product-likes'><%= pluralize @product.likes, 'like' %></p>
-      <button class='btn btn-outline-primary btn-like'>Like</button>
+      <p class='mb-0'>
+        <%= @product.likes.count %>
+        <%= (@product.likes.count) == 1 ? ' Like' : ' Likes'%>
+      </p>
+      <% if user_signed_in? && !current_user.admin %>
+        <% pre_like = @product.likes.find { |like| like.user_id == current_user.id} %>
+        <% if pre_like %>
+          <%= button_to 'Like', product_like_path(@product, pre_like), 
+              method: :delete, class: 'btn btn-primary btn-like' %>
+        <% else %>
+          <%= button_to 'Like', product_likes_path(@product), 
+              method: :post, class: 'btn btn-outline-primary btn-like' %>
+        <% end %>
+      <% end %>
     </div>
     <hr>
     <div class='order-buy-form'>
@@ -44,7 +58,7 @@
           </span>
         </h5>
         <div class="card-body">
-          <% if current_user.admin == true %>
+          <% if user_signed_in? && current_user.admin %>
             <%= link_to "Remove",
                   review_path(review, :product_id => review.product),
                   method: :delete,
@@ -71,23 +85,17 @@
   <% end %>
 </div>
 
-<hr>
-<div class='review-form'>
-  <p class='text-center mb-5' style='font-size: 25px'>Leave us a comment</p>
-  <%= simple_form_for([ @product, @review ], remote: true) do |f| %>
-    <%= f.input :title %>
-    <%= f.input :content, as: :text %>
-    <%= f.input :rating %>
-    <div class='text-right mt-5'>
-      <% if user_signed_in? %>
+<% if user_signed_in? && !current_user.admin %>
+  <hr>  
+  <div class='review-form'>
+    <p class='text-center mb-5' style='font-size: 25px'>Leave us a comment</p>
+    <%= simple_form_for([ @product, @review ], remote: true) do |f| %>
+      <%= f.input :title %>
+      <%= f.input :content, as: :text %>
+      <%= f.input :rating %>
+      <div class='text-right mt-5'>
         <%= f.button :submit, class: 'btn btn-outline-primary' %>
-      <% end %>
-    </div>
-  <% end %>
-  <div class='text-right mt-5'>
-      <% if !user_signed_in? %>
-        <%= button_to "Create Review", new_user_session_path, 
-                class: 'btn btn-outline-primary' %>
-      <% end %>
-    </div>
-</div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

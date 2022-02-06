@@ -1,5 +1,7 @@
+# frozen_string_literal: false
+
+# Reviews controller
 class ReviewsController < ApplicationController
- 
   def create
     @product = Product.find(params[:product_id])
     @review = Review.new(review_params)
@@ -11,7 +13,7 @@ class ReviewsController < ApplicationController
       render 'products/show'
     end
   end
-    
+
   def destroy
     @review = Review.find(params[:id])
     @review.destroy
@@ -19,7 +21,7 @@ class ReviewsController < ApplicationController
   end
 
   private
-  
+
   def review_params
     params.require(:review).permit(:title, :content, :rating)
   end

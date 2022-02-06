@@ -1,42 +1,23 @@
 AllCops:
   NewCops: enable
   Exclude:
-    - 'bin/**/*'
-    - 'db/**/*'
-    - 'config/**/*'
-    - 'node_modules/**/*'
-    - 'script/**/*'
-    - 'support/**/*'
-    - 'tmp/**/*'
-    - 'test/**/*'
+  - 'db/**/**'
+  - 'docs/**/**'
+  - 'specific-views-images/**/**'
+  - 'specific-views-pdf/**/**'
+  - 'vendor/**/**'
+  - 'bin/**/**'
+  - 'tmp/**/**'
+  - 'node_modules/**/**'
+  - 'config/**/**'
+  - 'Guardfile'
 
-Style/ConditionalAssignment:
-  Enabled: false
-Style/StringLiterals:
-  Enabled: false
-Style/RedundantReturn:
-  Enabled: false
-Style/Documentation:
-  Enabled: false
-Style/WordArray:
-  Enabled: false
-Metrics/AbcSize:
-  Enabled: false
-Style/MutableConstant:
-  Enabled: false
-Style/SignalException:
-  Enabled: false
-Metrics/CyclomaticComplexity:
-  Enabled: false
-Style/MissingRespondToMissing:
-  Enabled: false
-Lint/MissingSuper:
-  Enabled: false
-Style/FrozenStringLiteralComment:
-  Enabled: false
-Layout/LineLength:
+Metrics/ClassLength:
+  Exclude:
+    - 'test/**/**'
+Metrics/LineLength:
   Max: 120
-Style/EmptyMethod:
-  Enabled: false
-Bundler/OrderedGems:
-  Enabled: false
+  Exclude:
+    - 'test/**/**'
+Metrics/MethodLength:
+  Max: 15
