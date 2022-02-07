@@ -1,15 +1,17 @@
+# frozen_string_literal: false
+
 require 'rails_helper'
 
-# RSpec.describe "Users", type: :request do
-#   describe "GET # new" do
-#     it 'has a 200 status code' do
-#       get :new
-#       expect(response.status).to eq(200)
-#     end
+RSpec.describe 'Users', type: :request do
+# describe "GET # new" do
+#   it 'returns a successful response' do
+#     get new_user_session
+#     expect(response).to be_successful
+#   end
 
-#     it 'renders :new template' do 
-#       get :new
-#       expect(response).to render_template(:new)
-#     end
+#   it 'renders new user session template' do
+#     get new_user_session
+#     expect(response).to render_template('new')
 #   end
 # end
+end

@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 require 'rails_helper'
 
 RSpec.describe Review, type: :model do
@@ -14,7 +16,7 @@ RSpec.describe Review, type: :model do
 
     it 'must have a rating between 1 and 5' do
       review = create(:review)
-      expect(review.rating).to be_between(1,5)
+      expect(review.rating).to be_between(1, 5)
     end
   end
 end
