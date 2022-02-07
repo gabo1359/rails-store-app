@@ -36,6 +36,7 @@ gem 'simple_form'
 
 group :development, :test do
   gem 'dotenv-rails'
+  gem "factory_bot_rails"
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rspec-rails'
