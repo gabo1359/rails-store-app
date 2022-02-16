@@ -11,6 +11,9 @@
       <% end %>
     </div>
   </div>
+  <% if user_signed_in? && current_user.support %>
+    <%= link_to 'Add a new customer', new_users_admin_path, class: 'btn btn-outline-primary' %>
+  <% end %>
   <% if user_signed_in? && current_user.admin %>
     <%= link_to 'Add a new product', new_product_path, class: 'btn btn-outline-primary' %>
   <% end %>

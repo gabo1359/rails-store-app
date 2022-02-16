@@ -14,6 +14,17 @@ class ReviewsController < ApplicationController
     end
   end
 
+  def update
+    @review = Review.find(params[:id])
+    @product = @review.product
+    if params[:change] == 'true'
+      @review.update(approved: true)
+    else
+      @review.update(approved: false)
+    end
+    redirect_to product_path(@product)
+  end
+
   def destroy
     @review = Review.find(params[:id])
     @review.destroy

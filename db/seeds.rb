@@ -34,6 +34,16 @@ User.create(
 )
 
 User.create(
+  email: 'support@applaudo.com',
+  password: '123456',
+  first_name: 'Support',
+  last_name: 'User',
+  phone: '123-456-7890',
+  address: 'Web',
+  support: true
+)
+
+User.create(
   email: 'gabriel@applaudo.com',
   password: '123456',
   first_name: 'Gabriel',
@@ -66,6 +76,6 @@ User.create(
     title: 'Excellent product!', 
     content: 'Some description for the product', 
     rating: rand(1..5),
-    user_id: 2
+    user_id: 3
   })
 end

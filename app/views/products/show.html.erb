@@ -1,9 +1,11 @@
-<% if user_signed_in? && current_user.admin %>
+<% if user_signed_in? && (current_user.admin || current_user.support) %>
   <div class="product-edit-delete">
     <%= link_to 'Edit product', edit_product_path(@product), class: 'btn btn-outline-primary' %>
-    <%= button_to "Remove product", {:controller => :products,
+    <% if current_user.admin %>
+      <%= button_to "Remove product", {:controller => :products,
             :action => 'destroy', :id => @product.id }, :method => :delete,
             class: 'btn btn-outline-danger', data: { confirm: "Are you sure?" } %>
+    <% end %>
   </div>
 <% end %>
 
@@ -21,7 +23,7 @@
         <%= @product.likes.count %>
         <%= (@product.likes.count) == 1 ? ' Like' : ' Likes'%>
       </p>
-      <% if user_signed_in? && !current_user.admin %>
+      <% if user_signed_in? && !(current_user.admin || current_user.support) %>
         <% pre_like = @product.likes.find { |like| like.user_id == current_user.id} %>
         <% if pre_like %>
           <%= button_to 'Like', product_like_path(@product, pre_like), 
@@ -45,47 +47,24 @@
 </div>
 
 <div class='reviews-show'>
-  <% if @product.reviews.blank? %>
+  <% if user_signed_in? && (current_user.admin || current_user.support) %>
+    <h2>Reviews</h2>
+    <% @product.reviews.order('created_at DESC').each do |review| %>
+      <%= render 'reviews/review', review: review %>
+    <% end %>
+  <% elsif @product.reviews.blank? || @product.reviews.where(approved: true) == [] %>
     <p class='text-right'>💬 Be the first to leave a review for <%= @product.name %></p>
   <% else %>
     <h2>Reviews</h2>
     <% @product.reviews.order('created_at DESC').each do |review| %>
-      <div class="card">
-        <h5 class="card-header" style='background-color: hsla(0, 0, 0, 0.05)'>
-          <p><%= review.title %></p>
-          <span class='text-muted', style='font-size: 15px'>
-            <%= review.created_at.utc.localtime("-05:00").strftime("%h %d, %Y - %I:%M %p") %>
-          </span>
-        </h5>
-        <div class="card-body">
-          <% if user_signed_in? && current_user.admin %>
-            <%= link_to "Remove",
-                  review_path(review, :product_id => review.product),
-                  method: :delete,
-                  class: 'product-remove',
-                  data: { confirm: "Are you sure?" } %>
-          <% end %>
-          <h5 class="card-rating mt-2">
-            <% review.rating.times do  %>
-              <i class="fas fa-star" style='color: #FFCE00'></i>
-            <% end %>
-            <% review.blank_stars.times do %>
-              <i class="far fa-star" style='color: #FFCE00'></i>
-            <% end %>
-            <div class='text-right'>
-              <p class='text-muted' style='font-size: 18px'>Autor: 
-                <%= "#{review.user.first_name} #{review.user.last_name}" %>
-              </p>
-              </div>
-          </h5>
-          <p class="card-text"><p><%= review.content %></p></p>
-        </div>
-      </div>
+      <% if review.approved %>
+        <%= render 'reviews/review', review: review %>
+      <% end %>
     <% end %>
   <% end %>
 </div>
 
-<% if user_signed_in? && !current_user.admin %>
+<% if user_signed_in? && !(current_user.admin || current_user.support) %>
   <hr>  
   <div class='review-form'>
     <p class='text-center mb-5' style='font-size: 25px'>Leave us a comment</p>
