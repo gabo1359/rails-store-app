@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      flash[:notice] = 'The user was created successfully.'
       redirect_to products_path
     else
       render :new

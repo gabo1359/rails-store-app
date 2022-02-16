@@ -12,6 +12,6 @@ Rails.application.routes.draw do
   resources :reviews, only: [ :update, :destroy ]
   resources :orders, only: [ :index, :destroy ]
   resources :users_admin, only: [ :new, :create ], :controller => 'users'
-  get 'tags/:tag', to: 'products#index', as: :tag
-  get 'filter/:filter', to: 'products#index', as: :filter
+  # get 'tags/:tag', to: 'products#index', as: :tag
+  # get 'filter/:filter', to: 'products#index', as: :filter
 end

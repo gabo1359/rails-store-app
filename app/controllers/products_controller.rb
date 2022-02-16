@@ -8,13 +8,9 @@ class ProductsController < ApplicationController
   def index
     @tags = %w[Beverages Cereals Dairy Fats Nuts Seeds Sauces Soups Snacks Desserts Miscellaneous]
     @filters = %w[Name-ascending Name-descending Price-ascending Price-descending Most-liked]
-    return @products = Product.search_by_name_and_description(params[:query]) if params[:query].present?
-
-    return @products = Product.tagged_with(params[:tag]) if params[:tag]
-
-    return @products = Product.sort_products_by(params[:filter]) if params[:filter]
-
-    @products = Product.where('stock > ?', 0).order('created_at DESC')
+    @products = params[:tag].present? ? Product.tagged_with(params[:tag]) : Product.all
+    @products = params[:filter].present? ? @products.sort_products_by(params[:filter]) : @products.order(created_at: :desc)
+    @products = @products.search_by_name_and_description(params[:query]) if params[:query].present?
   end
 
   def show

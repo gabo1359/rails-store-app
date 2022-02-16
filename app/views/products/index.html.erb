@@ -7,7 +7,7 @@
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
       <% @filters.each do |filter| %>
-        <%= link_to filter, filter_path(filter), class: "dropdown-item" %>
+        <%= link_to filter, request.query_parameters.merge(filter: filter), class: "dropdown-item" %>
       <% end %>
     </div>
   </div>
@@ -21,7 +21,7 @@
 
 <div class='tags-container'>
   <% @tags.each do |tag| %>
-    <%= link_to tag, tag_path(tag), class: 'product-tag-anchor' %>
+    <%= link_to tag, request.query_parameters.merge(tag: tag), class: 'product-tag-anchor' %>
   <% end %>
   <%= link_to 'All products', products_path, class: 'product-tag-anchor' %>
 </div>
@@ -31,7 +31,7 @@
     <div class="card" style="width: 18rem;">
       <div class='product-tags'>
         <% product.tags.map(&:name).each do |tag| %>
-          <%= link_to tag, tag_path(tag), class: 'product-tag-anchor' %>
+          <%= link_to tag, request.query_parameters.merge(tag: tag), class: 'product-tag-anchor' %>
         <% end %>
       </div>
       <%= link_to product_path(product) do %>
