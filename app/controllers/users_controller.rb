@@ -1,3 +1,6 @@
+# frozen_string_literal: false
+
+# Users controller
 class UsersController < ApplicationController
 
   def new

@@ -1,5 +1,4 @@
 # frozen_string_literal: false
-require_relative '../services/products/get_products_service.rb'
 
 # Products controller
 class ProductsController < ApplicationController

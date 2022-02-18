@@ -1,5 +1,6 @@
-require_relative '../../queries/products/get_products_query.rb'
+# frozen_string_literal: false
 
+# Get products service
 class GetProductsService < ApplicationService
   attr_accessor :params
   

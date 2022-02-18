@@ -2,7 +2,7 @@
   <h5 class="card-header" style='background-color: hsla(0, 0, 0, 0.05)'>
     <p><%= review.title %></p>
     <span class='text-muted', style='font-size: 15px'>
-        <%= review.created_at.utc.localtime("-05:00").strftime("%h %d, %Y - %I:%M %p") %>
+        <%= review.date_and_time %>
     </span>
   </h5>
   <div class="card-body">

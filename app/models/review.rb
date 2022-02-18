@@ -11,4 +11,8 @@ class Review < ApplicationRecord
   def blank_stars
     5 - rating
   end
+
+  def date_and_time
+    created_at.utc.localtime('-05:00').strftime('%h %d, %Y - %I:%M %p')
+  end
 end

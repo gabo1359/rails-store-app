@@ -1,3 +1,6 @@
+# frozen_string_literal: false
+
+# Get products query
 class GetProductsQuery < ApplicationQuery
   attr_reader :params
   
