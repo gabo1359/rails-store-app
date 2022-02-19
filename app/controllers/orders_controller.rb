@@ -8,8 +8,7 @@ class OrdersController < ApplicationController
     if user_signed_in? && current_user.admin
       @orders = Order.all
     elsif !user_signed_in?
-      user_id = User.find(2).id
-      @orders = Order.where(user_id: user_id)
+      @orders = Order.where(user_id: User.find(2).id)
     else
       @orders = Order.where(user_id: current_user.id)
     end
@@ -17,8 +16,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @product = Product.find(params[:product_id])
-    @order = Orders::CreateOrderService.call(product: @product, 
+    @order = Orders::CreateOrderService.call(product_id: params[:product_id], 
                                              quantity: order_params[:quantity],
                                              user: current_user)
     if @order.save
@@ -29,8 +27,7 @@ class OrdersController < ApplicationController
   end
 
   def destroy
-    @order = Order.find(params[:order_id])
-    @order.destroy
+    Orders::DestroyOrderService.call(order_id: params[:order_id])
     redirect_to orders_path
   end
 

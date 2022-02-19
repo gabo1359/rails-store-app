@@ -36,7 +36,7 @@
     </div>
     <hr>
     <div class='order-buy-form'>
-      <%= simple_form_for([ @product, @order_form ]) do |f| %>
+      <%= simple_form_for([ @product, @order ]) do |f| %>
         <%= f.input :quantity, input_html: { value: 1 } %>
         <div class='text-right mt-5'>
           <%= f.submit 'Buy', class: 'btn btn-primary btn-buy' %>

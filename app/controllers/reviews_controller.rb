@@ -4,9 +4,11 @@
 class ReviewsController < ApplicationController
   def create
     @product = Product.find(params[:product_id])
-    @review = Review.new(review_params)
-    @review.product = @product
-    @review.user = current_user
+    @review = Reviews::CreateReviewService.call(product: @product,
+                                                title: review_params[:title],
+                                                content: review_params[:content],
+                                                rating: review_params[:rating],
+                                                user: current_user)
     if @review.save
       redirect_to product_path(@product)
     else
@@ -15,13 +17,12 @@ class ReviewsController < ApplicationController
   end
 
   def update
-    @review = Review.find(params[:id])
-    @product = @review.product
     if params[:change] == 'true'
-      @review.update(approved: true)
+      @review = Reviews::ApproveReviewService.call(review_id: params[:id])
     else
-      @review.update(approved: false)
+      @review = Reviews::DisapproveReviewService.call(review_id: params[:id])
     end
+    @product = @review.product
     redirect_to product_path(@product)
   end
 

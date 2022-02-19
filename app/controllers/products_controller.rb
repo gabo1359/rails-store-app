@@ -13,7 +13,7 @@ class ProductsController < ApplicationController
 
   def show
     @review = Review.new
-    @order_form = Order.new
+    @order = Order.new
   end
 
   def new
