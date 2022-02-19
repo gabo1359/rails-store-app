@@ -15,12 +15,12 @@ class ProductForm
   validates :tag_list, presence: true
 
   def initialize(params = {})
-    self.sku = params.fetch(:sku, '')
-    self.name = params.fetch(:name, '')
-    self.description = params.fetch(:description, '')
-    self.price = params.fetch(:price, '')
-    self.stock = params.fetch(:stock, '')
-    self.tag_list = params.fetch(:tag_list, '')
+    @sku = params.fetch(:sku, '')
+    @name = params.fetch(:name, '')
+    @description = params.fetch(:description, '')
+    @price = params.fetch(:price, '')
+    @stock = params.fetch(:stock, '')
+    @tag_list = params.fetch(:tag_list, '')
   end
 
   def self.model_name

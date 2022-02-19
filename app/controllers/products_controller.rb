@@ -8,12 +8,12 @@ class ProductsController < ApplicationController
   def index
     @tags = %w[Beverages Cereals Dairy Fats Nuts Seeds Sauces Soups Snacks Desserts Miscellaneous]
     @filters = %w[Name-ascending Name-descending Price-ascending Price-descending Most-liked]
-    @products = GetProductsService.call(params)
+    @products = Products::GetProductsService.call(params)
   end
 
   def show
     @review = Review.new
-    @order = Order.new
+    @order_form = Order.new
   end
 
   def new

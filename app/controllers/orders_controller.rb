@@ -2,7 +2,6 @@
 
 # Orders controller
 class OrdersController < ApplicationController
-  before_action :set_order, only: %i[show destroy]
   skip_before_action :authenticate_user!, only: %i[index create destroy]
 
   def index
@@ -19,11 +18,9 @@ class OrdersController < ApplicationController
 
   def create
     @product = Product.find(params[:product_id])
-    @order = Order.new(order_params)
-    @order.product = @product
-    user_signed_in? ? @order.user = current_user : @order.user = User.find(2)
-    @product.stock -= @order.quantity
-    @product.save
+    @order = Orders::CreateOrderService.call(product: @product, 
+                                             quantity: order_params[:quantity],
+                                             user: current_user)
     if @order.save
       redirect_to orders_path
     else
@@ -38,10 +35,6 @@ class OrdersController < ApplicationController
   end
 
   private
-
-  def set_order
-    @order = Order.find(params[:id])
-  end
 
   def order_params
     params.require(:order).permit(:quantity)
