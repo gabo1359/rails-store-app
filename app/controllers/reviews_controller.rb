@@ -27,8 +27,7 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
-    @review = Review.find(params[:id])
-    @review.destroy
+    Reviews::DestroyReviewService.call(review_id: params[:id])
     redirect_to product_path(params[:product_id])
   end
 

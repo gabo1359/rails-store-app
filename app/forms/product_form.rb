@@ -10,9 +10,7 @@ class ProductForm
   validates :name, presence: { message: 'must be given please' }, length: { minimum: 3 }
   validates :description, presence: true
   validates :price, presence: true
-  validates :stock, presence: true, numericality: { only_integer: true },
-                    inclusion: { in: (0..100).to_a, message: '%<value>s is not a valid stock' }
-  validates :tag_list, presence: true
+  validates :stock, presence: true, numericality: { only_integer: true }
 
   def initialize(params = {})
     @sku = params.fetch(:sku, '')
