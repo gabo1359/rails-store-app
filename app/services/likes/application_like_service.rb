@@ -2,7 +2,6 @@
 
 # Application like service
 class Likes::ApplicationLikeService < ApplicationService
-
   protected
 
   def already_liked?

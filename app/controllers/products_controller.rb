@@ -4,7 +4,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
   skip_before_action :authenticate_user!, only: %i[index show]
-  
+
   def index
     @tags = %w[Beverages Cereals Dairy Fats Nuts Seeds Sauces Soups Snacks Desserts Miscellaneous]
     @filters = %w[Name-ascending Name-descending Price-ascending Price-descending Most-liked]
@@ -19,7 +19,7 @@ class ProductsController < ApplicationController
   def new
     @product_form = ProductForm.new
   end
-  
+
   def create
     @product_form = ProductForm.new(product_params)
     if @product_form.submit
@@ -28,10 +28,9 @@ class ProductsController < ApplicationController
       render :new
     end
   end
- 
-  def edit
-  end
-  
+
+  def edit; end
+
   def update
     if @product.update(product_params)
       redirect_to product_path(@product)
@@ -39,21 +38,20 @@ class ProductsController < ApplicationController
       render :edit
     end
   end
- 
+
   def destroy
     @product.destroy
     redirect_to products_path
   end
- 
+
   private
 
   def set_product
     @product = Product.find(params[:id])
   end
-  
+
   def product_params
     params.require(:product).permit(:sku, :name, :description, :price, :stock,
                                     :tag_list, :tag, { tag_ids: [] }, :tag_ids)
   end
-end  
-
+end

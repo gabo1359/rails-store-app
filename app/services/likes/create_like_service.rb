@@ -19,4 +19,3 @@ class Likes::CreateLikeService < Likes::ApplicationLikeService
     product.update(likes_number: likes_number)
   end
 end
-  

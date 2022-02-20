@@ -28,8 +28,9 @@ class ProductForm
 
   def submit
     return false unless valid?
+
     Product.create(sku: sku, name: name, description: description, price:  price, stock: stock,
-                       tag_ids: tag_ids)
+                   tag_ids: tag_ids)
     true
   end
 end

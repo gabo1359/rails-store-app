@@ -3,7 +3,6 @@
 # Product form
 class UserForm
   include ActiveModel::Model
-
   attr_accessor :first_name, :last_name, :address, :phone, :email, :password, :password_confirmation
 
   validates :first_name, presence: true
@@ -30,7 +29,8 @@ class UserForm
 
   def submit
     return false unless valid?
-    u = User.create(first_name: first_name, last_name: last_name, address: address, phone: phone,
+
+    User.create(first_name: first_name, last_name: last_name, address: address, phone: phone,
                 email: email, password: password, password_confirmation: password_confirmation)
     true
   end

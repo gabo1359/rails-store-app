@@ -1,6 +1,9 @@
+# frozen_string_literal: false
+
+# Get like query
 class Likes::GetLikeQuery < ApplicationQuery
   attr_accessor :user, :product
-  
+
   def initialize(params)
     @user = params[:user]
     @product = params[:product]

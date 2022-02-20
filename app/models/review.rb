@@ -17,6 +17,6 @@ class Review < ApplicationRecord
   end
 
   def author
-    "#{self.user.first_name} #{self.user.last_name}"
+    "#{user.first_name} #{user.last_name}"
   end
 end
