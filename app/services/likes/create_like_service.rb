@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 # Create like service
-class Likes::CreateLikeService < ApplicationService
+class Likes::CreateLikeService < Likes::ApplicationLikeService
   attr_reader :product, :user
 
   def initialize(params)
@@ -17,13 +17,6 @@ class Likes::CreateLikeService < ApplicationService
     end
     likes_number = product.likes.count
     product.update(likes_number: likes_number)
-  end
-
-  private
-
-  def already_liked?
-    query = Likes::GetLikeQuery.call(user: user, product: product)
-    query.exists?
   end
 end
   
