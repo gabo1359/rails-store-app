@@ -1,23 +1,38 @@
-<% if current_user.admin == true %>
+<% if user_signed_in? && (current_user.admin || current_user.support) %>
   <div class="product-edit-delete">
-      <%= link_to 'Edit product', edit_product_path(@product), class: 'btn btn-outline-primary' %>
+    <%= link_to 'Edit product', edit_product_path(@product), class: 'btn btn-outline-primary' %>
+    <% if current_user.admin %>
       <%= button_to "Remove product", {:controller => :products,
-                  :action => 'destroy', :id => @product.id }, :method => :delete,
-                  class: 'btn btn-outline-danger', data: { confirm: "Are you sure?" } %>
+            :action => 'destroy', :id => @product.id }, :method => :delete,
+            class: 'btn btn-outline-danger', data: { confirm: "Are you sure?" } %>
+    <% end %>
   </div>
 <% end %>
 
 <div class='product-show-card'>
-  <%= image_tag('coca_cola', class: 'product-show-image') %>
+  <%= image_tag('coca_cola.png', class: 'product-show-image') %>
   <div class='product-details'>
     <p class='product-name'><%= @product.name %></p>
     <p class='product-description'>Description: <%= @product.description %></p>
+    <p class='product-description'>Tags: <%= @product.tag_list %></p>
     <p class='product-price'>Price: $ <%= @product.price %></p>
     <hr>
     <div class='product-stock-likes'>
       <p class='product-stock'>Stock: <%= @product.stock %></p>
-      <p class='product-likes'><%= pluralize @product.likes, 'like' %></p>
-      <button class='btn btn-outline-primary btn-like'>Like</button>
+      <p class='mb-0'>
+        <%= @product.likes.count %>
+        <%= (@product.likes.count) == 1 ? ' Like' : ' Likes'%>
+      </p>
+      <% if user_signed_in? && !(current_user.admin || current_user.support) %>
+        <% pre_like = @product.likes.find { |like| like.user_id == current_user.id} %>
+        <% if pre_like %>
+          <%= button_to 'Like', product_like_path(@product, pre_like), 
+              method: :delete, class: 'btn btn-primary btn-like' %>
+        <% else %>
+          <%= button_to 'Like', product_likes_path(@product), 
+              method: :post, class: 'btn btn-outline-primary btn-like' %>
+        <% end %>
+      <% end %>
     </div>
     <hr>
     <div class='order-buy-form'>
@@ -32,45 +47,34 @@
 </div>
 
 <div class='reviews-show'>
-  <% if @product.reviews.blank? %>
+  <% if user_signed_in? && (current_user.admin || current_user.support) %>
+    <h2>Reviews</h2>
+    <% @product.reviews.order('created_at DESC').each do |review| %>
+      <%= render 'reviews/review', review: review %>
+    <% end %>
+  <% elsif @product.reviews.blank? || @product.reviews.where(approved: true) == [] %>
     <p class='text-right'>💬 Be the first to leave a review for <%= @product.name %></p>
   <% else %>
     <h2>Reviews</h2>
     <% @product.reviews.order('created_at DESC').each do |review| %>
-      <div class="card">
-        <h5 class="card-header" style='background-color: hsla(0, 0, 0, 0.05)'>
-          <p><%= "#{review.user.first_name} #{review.user.last_name}" %></p>
-          <span class='text-muted', style='font-size: 15px'>
-            <%= review.created_at.to_s.slice(0,review.created_at.to_s.length - 4) %>
-          </span>
-        </h5>
-        <div class="card-body">
-          <% if current_user.admin == true %>
-            <%= link_to "Remove",
-                  review_path(review, :product_id => review.product),
-                  method: :delete,
-                  class: 'product-remove',
-                  data: { confirm: "Are you sure?" } %>
-          <% end %>
-          <h5 class="card-title text-right"><p><%= review.title %></p></h5>
-          <p class="card-text"><p><%= review.content %></p></p>
-        </div>
-      </div>
+      <% if review.approved %>
+        <%= render 'reviews/review', review: review %>
+      <% end %>
     <% end %>
   <% end %>
 </div>
 
-<hr>
-<div class='review-form'>
-  <p class='text-center mb-5' style='font-size: 25px'>Leave us a comment</p>
-  <%= simple_form_for([ @product, @review ], remote: true) do |f| %>
-    <%= f.input :title %>
-    <%= f.input :content, as: :text %>
-    <div class='text-right mt-5'>
-      <%= f.button :submit, class: 'btn btn-outline-primary' %>
-    </div>
-  <% end %>
-</div>
-
-
-
+<% if user_signed_in? && !(current_user.admin || current_user.support) %>
+  <hr>  
+  <div class='review-form'>
+    <p class='text-center mb-5' style='font-size: 25px'>Leave us a comment</p>
+    <%= simple_form_for([ @product, @review ], remote: true) do |f| %>
+      <%= f.input :title %>
+      <%= f.input :content, as: :text %>
+      <%= f.input :rating %>
+      <div class='text-right mt-5'>
+        <%= f.button :submit, class: 'btn btn-outline-primary' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

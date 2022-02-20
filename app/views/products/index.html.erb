@@ -1,20 +1,48 @@
 <h1>Everything you need in one place!</h1>
 
 <div class="product-add">
-      <%= link_to 'Add a new product', new_product_path, class: 'btn btn-outline-primary' %>
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+      Sort by
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <% @filters.each do |filter| %>
+        <%= link_to filter, request.query_parameters.merge(filter: filter), class: "dropdown-item" %>
+      <% end %>
+    </div>
+  </div>
+  <% if user_signed_in? && current_user.support %>
+    <%= link_to 'Add a new customer', new_users_admin_path, class: 'btn btn-outline-primary' %>
+  <% end %>
+  <% if user_signed_in? && current_user.admin %>
+    <%= link_to 'Add a new product', new_product_path, class: 'btn btn-outline-primary' %>
+  <% end %>
+</div>
+
+<div class='tags-container'>
+  <% @tags.each do |tag| %>
+    <%= link_to tag, request.query_parameters.merge(tag: tag), class: 'product-tag-anchor' %>
+  <% end %>
+  <%= link_to 'All products', products_path, class: 'product-tag-anchor' %>
 </div>
 
 <div class='products-container mt-5'>
   <% @products.each do |product| %>
     <div class="card" style="width: 18rem;">
+      <div class='product-tags'>
+        <% product.tags.map(&:name).each do |tag| %>
+          <%= link_to tag, request.query_parameters.merge(tag: tag), class: 'product-tag-anchor' %>
+        <% end %>
+      </div>
       <%= link_to product_path(product) do %>
-        <%= image_tag('snack_store', class: 'card-img-top', style: 'background-color: black;') %>
+        <%= image_tag('snack_store.png', class: 'card-img-top', style: 'background-color: black;') %>
       <% end %>
       <div class="card-body">
         <h5 class="card-title"><%= product.name %></h5>
         <p class="card-text text-right">Price: $ <%= product.price %></p>
         <div class='product-card-buttons'>
           <%= link_to 'Buy product', product_path(product), class:'btn btn-primary' %>
+          <p><%= product.likes.count %> <i class="far fa-thumbs-up" style='color: #157EFB'></i></p>
         </div>
       </div>
     </div>

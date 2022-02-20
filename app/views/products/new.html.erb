@@ -1,13 +1,15 @@
 <h1>Insert new product</h1>
 
 <div class='user-form'>
-    <%= simple_form_for(@product) do |f| %>
+    <%= simple_form_for(@product_form) do |f| %>
     <div class="form-inputs">
         <%= f.input :sku, label: 'SKU' %>
         <%= f.input :name %>
         <%= f.input :description, as: :text %>
         <%= f.input :price %>
         <%= f.input :stock %>
+        <%= f.input :tag_ids, as: :select, label: 'Tags',
+            collection: Tag.order(:name), label_method: :name, input_html: { multiple: true } %>
     </div>
     
     <div class="form-actions">

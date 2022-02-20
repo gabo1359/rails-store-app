@@ -1,18 +1,24 @@
+# frozen_string_literal: false
+
+# Orders controller
 class OrdersController < ApplicationController
-    before_action :set_order, only: %i[show destroy]
+  skip_before_action :authenticate_user!, only: %i[index create destroy]
 
   def index
-    @orders = Order.all
+    if user_signed_in? && current_user.admin
+      @orders = Order.all
+    elsif !user_signed_in?
+      @orders = Order.where(user_id: User.find(2).id)
+    else
+      @orders = Order.where(user_id: current_user.id)
+    end
     @total_amount = 0
   end
 
   def create
-    @product = Product.find(params[:product_id])
-    @order = Order.new(order_params)
-    @order.product = @product
-    @order.user = current_user
-    @product.stock -= @order.quantity
-    @product.save
+    @order = Orders::CreateOrderService.call(product_id: params[:product_id], 
+                                             quantity: order_params[:quantity],
+                                             user: current_user)
     if @order.save
       redirect_to orders_path
     else
@@ -21,16 +27,11 @@ class OrdersController < ApplicationController
   end
 
   def destroy
-    @order = Order.find(params[:order_id])
-    @order.destroy
+    Orders::DestroyOrderService.call(order_id: params[:order_id])
     redirect_to orders_path
   end
 
   private
-
-  def set_order
-   @order = Order.find(params[:id])
-  end
 
   def order_params
     params.require(:order).permit(:quantity)

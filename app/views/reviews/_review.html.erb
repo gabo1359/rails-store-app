@@ -1,0 +1,46 @@
+<div class="card">
+  <h5 class="card-header" style='background-color: hsla(0, 0, 0, 0.05)'>
+    <p><%= review.title %></p>
+    <span class='text-muted', style='font-size: 15px'>
+        <%= review.date_and_time %>
+    </span>
+  </h5>
+  <div class="card-body">
+    <% if user_signed_in? && (current_user.admin || current_user.support) %>
+      <% if current_user.admin %>
+        <%= link_to "Remove",
+          review_path(review, :product_id => review.product),
+                              method: :delete,
+                              class: 'product-remove',
+                              data: { confirm: "Are you sure?" } %>
+      <% end %>
+      <% if review.approved %>
+        <%= link_to "Disapprove",
+          review_path(review, change: false),
+                              method: :patch,
+                              class: 'product-disapproved',
+                              data: { confirm: "Are you sure?" } %>
+      <% else %>
+        <%= link_to "Approve",
+          review_path(review, change: true),
+                              method: :patch,
+                              class: 'product-approved',
+                              data: { confirm: "Are you sure?" } %>
+       <% end %>
+    <% end %>
+    <h5 class="card-rating mt-2">
+      <% review.rating.times do  %>
+         <i class="fas fa-star" style='color: #FFCE00'></i>
+      <% end %>
+      <% review.blank_stars.times do %>
+        <i class="far fa-star" style='color: #FFCE00'></i>
+      <% end %>
+      <div class='text-right'>
+        <p class='text-muted' style='font-size: 18px'>Autor: 
+          <%= "#{review.user.first_name} #{review.user.last_name}" %>
+        </p>
+      </div>
+    </h5>
+    <p class="card-text"><p><%= review.content %></p></p>
+  </div>
+</div>

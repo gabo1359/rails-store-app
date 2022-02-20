@@ -6,8 +6,12 @@
         <%= f.input :sku, label: 'SKU' %>
         <%= f.input :name %>
         <%= f.input :description, as: :text %>
-        <%= f.input :price %>
+        <% if current_user.admin %>
+            <%= f.input :price %>
+        <% end %>
         <%= f.input :stock %>
+        <%= f.input :tag_ids, as: :select, label: 'Tags',
+            collection: Tag.order(:name), label_method: :name, input_html: { multiple: true } %>
     </div>
     
     <div class="form-actions">
