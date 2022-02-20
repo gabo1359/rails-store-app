@@ -4,12 +4,12 @@
 class UsersController < ApplicationController
 
   def new
-    @user = User.new
+    @user_form = UserForm.new
   end
 
   def create
-    @user = User.new(user_params)
-    if @user.save
+    @user_form = UserForm.new(user_params)
+    if @user_form.submit
       flash[:notice] = 'The user was created successfully.'
       redirect_to products_path
     else
@@ -20,6 +20,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :first_name, :last_name, :phone, :address)
+    params.require(:user).permit(:email, :password, :first_name, :last_name, :phone, :address,
+                                 :password_confirmation)
   end
 end

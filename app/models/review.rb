@@ -15,4 +15,8 @@ class Review < ApplicationRecord
   def date_and_time
     created_at.utc.localtime('-05:00').strftime('%h %d, %Y - %I:%M %p')
   end
+
+  def author
+    "#{self.user.first_name} #{self.user.last_name}"
+  end
 end

@@ -11,7 +11,7 @@ class ProductForm
   validates :description, presence: true
   validates :price, presence: true
   validates :stock, presence: true, numericality: { only_integer: true }
-  validates :tag_list, presence: true
+  validates :tag_ids, presence: true
 
   def initialize(params = {})
     @sku = params.fetch(:sku, '')
@@ -19,7 +19,7 @@ class ProductForm
     @description = params.fetch(:description, '')
     @price = params.fetch(:price, '')
     @stock = params.fetch(:stock, '')
-    @tag_list = params.fetch(:tag_list, '')
+    @tag_ids = params.fetch(:tag_ids, '')
   end
 
   def self.model_name
@@ -29,7 +29,7 @@ class ProductForm
   def submit
     return false unless valid?
     Product.create(sku: sku, name: name, description: description, price:  price, stock: stock,
-                   tag_list: tag_list)
+                       tag_ids: tag_ids)
     true
   end
 end

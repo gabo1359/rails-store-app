@@ -17,12 +17,12 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new
+    @product_form = ProductForm.new
   end
   
   def create
-    @product = Product.new(product_params)
-    if @product.save
+    @product_form = ProductForm.new(product_params)
+    if @product_form.submit
       redirect_to products_path
     else
       render :new
