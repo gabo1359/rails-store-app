@@ -45,4 +45,6 @@ class Product < ApplicationRecord
                   using: {
                     tsearch: { prefix: true }
                   }
+
+  validates :tag_list, presence: true
 end
