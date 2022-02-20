@@ -11,5 +11,6 @@ class Reviews::DestroyReviewService < ApplicationService
   def call
     review = Review.find(review_id)
     review.destroy
+    review
   end
 end
