@@ -1,8 +1,8 @@
 <% if user_signed_in? && (current_user.admin || current_user.support) %>
   <div class="product-edit-delete">
-    <%= link_to 'Edit product', edit_product_path(@product), class: 'btn btn-outline-primary' %>
+    <%= link_to 'Edit product', edit_admin_product_path(@product), class: 'btn btn-outline-primary' %>
     <% if current_user.admin %>
-      <%= button_to "Remove product", {:controller => :products,
+      <%= button_to "Remove product", {:controller => 'admin/products',
             :action => 'destroy', :id => @product.id }, :method => :delete,
             class: 'btn btn-outline-danger', data: { confirm: "Are you sure?" } %>
     <% end %>
@@ -68,7 +68,7 @@
   <hr>  
   <div class='review-form'>
     <p class='text-center mb-5' style='font-size: 25px'>Leave us a comment</p>
-    <%= simple_form_for([ @product, @review ], remote: true) do |f| %>
+    <%= simple_form_for([ @product, @review ]) do |f| %>
       <%= f.input :title %>
       <%= f.input :content, as: :text %>
       <%= f.input :rating %>

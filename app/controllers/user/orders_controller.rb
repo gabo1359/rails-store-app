@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 # Orders controller
-class OrdersController < ApplicationController
+class User::OrdersController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index create destroy]
 
   def index

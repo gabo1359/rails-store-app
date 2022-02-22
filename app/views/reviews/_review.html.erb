@@ -9,20 +9,20 @@
     <% if user_signed_in? && (current_user.admin || current_user.support) %>
       <% if current_user.admin %>
         <%= link_to "Remove",
-          review_path(review, :product_id => review.product),
+          admin_product_review_path(review, :product_id => review.product),
                               method: :delete,
                               class: 'product-remove',
                               data: { confirm: "Are you sure?" } %>
       <% end %>
       <% if review.approved %>
         <%= link_to "Disapprove",
-          review_path(review, change: false),
+          admin_product_review_path(review.product, review, change: false),
                               method: :patch,
                               class: 'product-disapproved',
                               data: { confirm: "Are you sure?" } %>
       <% else %>
         <%= link_to "Approve",
-          review_path(review, change: true),
+          admin_product_review_path(review.product, review, change: true),
                               method: :patch,
                               class: 'product-approved',
                               data: { confirm: "Are you sure?" } %>
