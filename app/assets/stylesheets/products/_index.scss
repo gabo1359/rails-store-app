@@ -29,6 +29,10 @@
     flex-wrap: wrap;
     .card {
         position: relative;
+        .card-img-top {
+            width: 100%;
+            height: 230px;
+        }
         .product-tags {
             position: absolute;
             top: 2px;
@@ -68,5 +72,28 @@
         p {
             margin-bottom: 0px;
         }
+    }
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    .item-pagination {
+        text-decoration: none;
+        background-color: white;
+        padding: 3px 10px;
+        border: 1px solid rgba(0, 0, 0, 0.255);
+        border-radius: 3px;
+    }
+    .item-pagination:hover {
+        background-color: #ededed;
+        color: #046CE7;
+    }
+    .select {
+        background-color: #046CE7;
+        color: white;
+        border: 1px solid #046CE7;;
     }
 }

@@ -5,7 +5,7 @@ class ProductForm
   include ActiveModel::Model
   # include ActiveRecord::Validations
 
-  attr_accessor :sku, :name, :description, :price, :stock, :tag_list, :tag_ids, :product
+  attr_accessor :sku, :name, :description, :price, :stock, :tag_list, :tag_ids, :product, :photo
 
   validates :sku, presence: true, format: { with: /\b\d{4}-\D{3}\b/, message: 'format 1234-ABC' }
   validates :name, presence: { message: 'must be given please' }, length: { minimum: 3 }
@@ -22,14 +22,14 @@ class ProductForm
     return false unless valid?
 
     Product.create(sku: sku, name: name, description: description, price:  price, stock: stock,
-                   tag_ids: tag_ids)
+                   tag_ids: tag_ids, photo: photo)
     true
   end
 
   def update?
     return false unless valid?
     product.update(sku: sku, name: name, description: description, price:  price, stock: stock,
-                   tag_ids: tag_ids)
+                   tag_ids: tag_ids, photo: photo)
     true
   end
 end

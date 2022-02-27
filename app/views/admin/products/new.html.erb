@@ -8,6 +8,7 @@
         <%= f.input :description, as: :text %>
         <%= f.input :price %>
         <%= f.input :stock %>
+        <%= f.input :photo, as: :file %>
         <%= f.input :tag_ids, as: :select, label: 'Tags',
             collection: Tag.order(:name), label_method: :name, input_html: { multiple: true } %>
     </div>

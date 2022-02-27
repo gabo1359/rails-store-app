@@ -53,6 +53,12 @@ class Admin::ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:sku, :name, :description, :price, :stock,
-                                    :tag_list, :tag, { tag_ids: [] }, :tag_ids)
+                                    :tag_list, :tag, { tag_ids: [] }, :tag_ids, :photo)
   end
+
+  # def require_admin
+  #   unless current_user.admin
+  #     redirect_to root_path
+  #   end
+  # end
 end

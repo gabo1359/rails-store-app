@@ -6,10 +6,9 @@
         <%= f.input :sku, label: 'SKU' %>
         <%= f.input :name %>
         <%= f.input :description, as: :text %>
-        <% if current_user.admin %>
-            <%= f.input :price %>
-        <% end %>
+        <%= f.input :price %>
         <%= f.input :stock %>
+        <%= f.input :photo, as: :file %>
         <%= f.input :tag_ids, as: :select, label: 'Tags',
             collection: Tag.order(:name), label_method: :name, input_html: { multiple: true } %>
     </div>

@@ -2,9 +2,11 @@
 
 # Get products query
 class Products::GetProductsQuery < ApplicationQuery
-  attr_reader :tag, :filter, :query
+  attr_reader :tag, :filter, :query, :page, :products_per_page
 
   def initialize(params)
+    @products_per_page = params[:products_per_page]
+    @page = params.fetch(:page, 1).to_i
     @tag = params[:tag]
     @filter = params[:filter]
     @query = params[:query]

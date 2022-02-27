@@ -22,7 +22,6 @@ class UserForm
     return false unless valid?
     User.create({first_name: first_name, last_name: last_name, address: address, phone: phone,
               email: email, password: password, password_confirmation: password_confirmation})
-    
   end
 
   private

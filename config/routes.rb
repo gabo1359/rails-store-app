@@ -31,7 +31,7 @@ Rails.application.routes.draw do
       resources :likes
     end
   end
-  
+
   scope module: :support do
     resources :users_admin, only: [ :new, :create ], :controller => 'users'
   end

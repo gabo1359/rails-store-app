@@ -7,6 +7,7 @@ class Product < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
+  has_one_attached :photo
 
   def self.tagged_with(name)
     Tag.find_by_name!(name).products

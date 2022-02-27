@@ -1,16 +1,18 @@
 <% if user_signed_in? && (current_user.admin || current_user.support) %>
   <div class="product-edit-delete">
     <%= link_to 'Edit product', edit_admin_product_path(@product), class: 'btn btn-outline-primary' %>
-    <% if current_user.admin %>
       <%= button_to "Remove product", {:controller => 'admin/products',
             :action => 'destroy', :id => @product.id }, :method => :delete,
             class: 'btn btn-outline-danger', data: { confirm: "Are you sure?" } %>
-    <% end %>
   </div>
 <% end %>
 
 <div class='product-show-card'>
-  <%= image_tag('coca_cola.png', class: 'product-show-image') %>
+  <% if @product.photo.key.nil? %>
+    <%= image_tag('coca_cola.png', class: 'product-show-image') %>
+  <% else %>
+    <%= cl_image_tag @product.photo.key, class: 'product-show-image' %>
+  <% end %>
   <div class='product-details'>
     <p class='product-name'><%= @product.name %></p>
     <p class='product-description'>Description: <%= @product.description %></p>

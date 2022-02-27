@@ -35,7 +35,11 @@
         <% end %>
       </div>
       <%= link_to product_path(product) do %>
-        <%= image_tag('snack_store.png', class: 'card-img-top', style: 'background-color: black;') %>
+        <% if product.photo.key.nil? %>
+          <%= image_tag('snack_store.png', class: 'card-img-top', style: 'background-color: black;') %>
+        <% else %>
+          <%= cl_image_tag product.photo.key, class: 'card-img-top', style: 'background-color: black;' %>
+        <% end %>
       <% end %>
       <div class="card-body">
         <h5 class="card-title"><%= product.name %></h5>
@@ -46,5 +50,22 @@
         </div>
       </div>
     </div>
+  <% end %>
+</div>
+
+<div class='pagination'>
+  <% if @page != 1 %>
+    <%= link_to '<< First', request.query_parameters.merge(page: 1), class: 'item-pagination' %>
+    <%= link_to '< Prev', request.query_parameters.merge(page: @page - 1), class: 'item-pagination' %>
+  <% end %>
+  <% @total_pages.times do |number| %>
+    <% if number + 1 <= @pagy.last %>
+      <%= link_to "#{number + 1}", request.query_parameters.merge(page: number + 1), 
+        class: "#{@page == number + 1 ? 'item-pagination select': 'item-pagination'}" %>
+    <% end %>
+  <% end %>
+  <% if @page != @pagy.last %>
+    <%= link_to 'Next >', request.query_parameters.merge(page: @page + 1), class: 'item-pagination' %>
+    <%= link_to 'Last >>', request.query_parameters.merge(page: @pagy.last), class: 'item-pagination' %>
   <% end %>
 </div>
