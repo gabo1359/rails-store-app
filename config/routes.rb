@@ -35,4 +35,10 @@ Rails.application.routes.draw do
   scope module: :support do
     resources :users_admin, only: [ :new, :create ], :controller => 'users'
   end
+
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :products, only: [:index, :show]
+    end
+  end
 end
