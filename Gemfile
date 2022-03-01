@@ -72,3 +72,4 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'cloudinary', '~> 1.16.0'
 gem 'pagy', '~> 5.10' # omit patch digit
 gem 'pundit'
+gem 'jwt'

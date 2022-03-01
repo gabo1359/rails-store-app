@@ -1,16 +1,8 @@
-class ProductPolicy < ApplicationPolicy
+class LikePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-     scope.all
+      scope.all
     end
-  end
-
-  def show?
-    true
-  end
-
-  def update?
-    user.present?
   end
 
   def create?

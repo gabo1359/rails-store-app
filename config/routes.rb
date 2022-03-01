@@ -38,7 +38,12 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :products, only: [:index, :show]
+      post '/auth/login', to: 'authentication#login'
+      resources :orders, only: :index
+      resources :products, only: [:index, :show, :update, :create, :destroy] do
+        resources :orders, only: :create
+        resource :likes
+      end
     end
   end
 end
