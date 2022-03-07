@@ -1,6 +1,8 @@
 # frozen_string_literal: false
 
 class User < ApplicationRecord
+  include Discard::Model
+  
   has_many :orders
   has_many :reviews
   has_many :likes, dependent: :destroy

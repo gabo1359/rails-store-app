@@ -48,6 +48,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       post '/auth/login', to: 'authentication#login'
+      resources :users_admin, only: [ :new, :create, :show, :destroy ], :controller => 'users'
       resources :orders, only: :index
       resources :products, only: [:index, :show, :update, :create, :destroy] do
         resources :orders, only: :create

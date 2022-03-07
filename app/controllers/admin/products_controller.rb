@@ -41,7 +41,11 @@ class Admin::ProductsController < ApplicationController
   end
 
   def destroy
-    @product.destroy
+    if @product.discarded?
+      @product.destroy
+    else
+      @product.discard
+    end
     redirect_to products_path
   end
 

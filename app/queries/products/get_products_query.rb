@@ -13,7 +13,7 @@ class Products::GetProductsQuery < ApplicationQuery
   end
 
   def call
-    products = tag.present? ? Product.tagged_with(tag) : Product.all
+    products = tag.present? ? Product.tagged_with(tag) : Product.kept
     products = filter.present? ? products.sort_products_by(filter) : products.order(created_at: :desc)
     products = products.search_by_name_and_description(query) if query.present?
     products

@@ -2,6 +2,8 @@
 
 # Product class
 class Product < ApplicationRecord
+  include Discard::Model
+
   has_many :orders, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :likes, dependent: :destroy
@@ -14,7 +16,7 @@ class Product < ApplicationRecord
   end
 
   def self.tagged_with(name)
-    Tag.find_by_name!(name).products
+    Tag.find_by_name!(name).products.where(discarded_at: nil)
   end
 
   def self.tag_counts
