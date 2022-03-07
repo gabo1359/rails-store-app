@@ -75,3 +75,5 @@ gem 'pagy', '~> 5.10' # omit patch digit
 gem 'pundit'
 gem 'jwt'
 gem 'rswag'
+gem 'sidekiq'
+gem 'sidekiq-failures', '~> 1.0'

@@ -5,9 +5,11 @@ RSpec.describe 'api/v1/products', type: :request do
   path '/api/v1/products' do
 
     get('list products') do
+      consumes 'application/json'
+      produces 'application/json'
+
       response(200, 'successful') do
-        it 'has a 200 status code' do
-          get '/api/v1/products'
+        run_test! do |response|
           expect(response.status).to eq(200)
         end
       end

@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
+
   devise_for :users
+
+  require 'sidekiq/web'
+
+  authenticate :user, lambda { |u| u.admin } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   

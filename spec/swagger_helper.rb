@@ -22,12 +22,21 @@ RSpec.configure do |config|
         version: 'v1'
       },
       paths: {},
+      definitions: {
+        Product: {
+          type: 'object',
+          properties: {
+            sku: { type: :string, example: '1234-ABC' },
+            name: { type: :string, example: 'product' }
+          }
+        }
+      },
       servers: [
         {
           url: 'https://{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'www.example.com'
+              default: 'localhost:3000'
             }
           }
         }

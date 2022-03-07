@@ -9,6 +9,10 @@ class Product < ApplicationRecord
   has_many :tags, through: :taggings
   has_one_attached :photo
 
+  def stock_less_than_3?
+    self.stock <= 3
+  end
+
   def self.tagged_with(name)
     Tag.find_by_name!(name).products
   end
