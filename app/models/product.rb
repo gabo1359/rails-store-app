@@ -35,8 +35,8 @@ class Product < ApplicationRecord
   end
 
   def self.sort_products_by(query)
-    filter, type = query.split('-')
-    case filter
+    sort, type = query.split('-')
+    case sort
     when 'Name'
       type == 'ascending' ? Product.order('name ASC') : Product.order('name DESC')
     when 'Price'

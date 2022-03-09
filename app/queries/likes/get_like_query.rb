@@ -10,6 +10,6 @@ class Likes::GetLikeQuery < ApplicationQuery
   end
 
   def call
-    Like.where(user_id: user.id, product_id: product)
+    Like.where(user_id: user.id, product_id: product.id)
   end
 end

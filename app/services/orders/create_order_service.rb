@@ -19,7 +19,7 @@ class Orders::CreateOrderService < ApplicationService
     product.save
    
     if product.stock_less_than_3? && !product.likes.empty? && order.user != product.likes.last.user
-      NotifyUserForLowStockJob.perform_later(product_id) 
+      NotifyUserForLowStockJob.perform_later(product_id)
     end
 
     order

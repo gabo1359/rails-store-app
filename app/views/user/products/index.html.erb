@@ -6,8 +6,8 @@
       Sort by
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <% @filters.each do |filter| %>
-        <%= link_to filter, request.query_parameters.merge(filter: filter), class: "dropdown-item" %>
+      <% @sorts.each do |sort| %>
+        <%= link_to sort, request.query_parameters.merge(sort: sort), class: "dropdown-item" %>
       <% end %>
     </div>
   </div>

@@ -10,12 +10,11 @@ class Likes::CreateLikeService < Likes::ApplicationLikeService
   end
 
   def call
-    if already_liked?
-      flash[:notice] = "You can't like more than once"
-    else
-      product.likes.create(user_id: user.id)
+    if !already_liked?(user, product)
+      like = product.likes.create(user_id: user.id)
+      likes_number = product.likes.count
+      product.update(likes_number: likes_number)
+      like
     end
-    likes_number = product.likes.count
-    product.update(likes_number: likes_number)
   end
 end

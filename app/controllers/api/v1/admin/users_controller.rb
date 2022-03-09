@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 # Users controller
-class Api::V1::UsersController < Api::V1::BaseController
+class Api::V1::Admin::UsersController < Api::V1::BaseController
   before_action :set_user, only: %i[show destroy]
 
   def new
@@ -9,14 +9,12 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def create
-    @user_form = UserForm.new(user_params)
-    # var = @user_form.submit
-
-    if @user_form.submit
-      flash[:notice] = 'The user was created successfully.'
-      redirect_to products_path
+    @user = User.new(user_params)
+    authorize @user
+    if @user.save
+      render :show
     else
-      render :new
+      render_error
     end
   end
 
@@ -39,6 +37,10 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def user_params
     params.require(:user).permit(:email, :password, :first_name, :last_name, :phone, :address,
-                                 :password_confirmation)
+                                 :password_confirmation, :admin, :support)
+  end
+
+  def render_error
+    render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
   end
 end

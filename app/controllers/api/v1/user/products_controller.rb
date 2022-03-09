@@ -1,37 +1,17 @@
-class Api::V1::ProductsController < Api::V1::BaseController
+class Api::V1::User::ProductsController < Api::V1::BaseController
   include Pagy::Backend
 
-  before_action :set_product, only: [:show, :update, :destroy]
+  before_action :set_product, only: :show
   
   def index
     @products = policy_scope(Products::GetProductsQuery.call(params))
+    
+    # Using representers
+    # products = policy_scope(Products::GetProductsQuery.call(params))
+    # render json: ProductsRepresenter.new(products).as_json
   end
 
-  def show
-  end
-
-  def update
-    if @product.update(product_params)
-      render :show
-    else
-      render_error
-    end
-  end
-
-  def create 
-    @product = Product.new(product_params)
-    authorize @product
-    if @product.save
-      render :show
-    else
-      render_error
-    end
-  end
-
-  def destroy
-    @product.destroy
-    head :no_content
-  end
+  def show; end
 
   private
 

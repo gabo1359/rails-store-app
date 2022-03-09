@@ -36,7 +36,7 @@ RSpec.describe 'Likes', type: :request do
       token = JSON.parse(response.body)['token']
       product = create(:product)
       post "/api/v1/products/#{product.id}/likes", headers: { Authorization: token }
-      delete "/api/v1/products/#{product.id}/likes", headers: { Authorization: token }
+      delete "/api/v1/products/#{product.id}/likes/1", headers: { Authorization: token }
       expect(response.status).to eq(204)
     end
 
@@ -46,7 +46,7 @@ RSpec.describe 'Likes', type: :request do
       token = JSON.parse(response.body)['token']
       product = create(:product)
       post "/api/v1/products/#{product.id}/likes", headers: { Authorization: token }
-      delete "/api/v1/products/#{product.id}/likes", headers: { Authorization: token }
+      delete "/api/v1/products/#{product.id}/likes/1", headers: { Authorization: token }
       expect(product.likes_number).to eq(0)
     end
 
@@ -56,7 +56,7 @@ RSpec.describe 'Likes', type: :request do
       token = JSON.parse(response.body)['token']
       product = create(:product)
       post "/api/v1/products/#{product.id}/likes", headers: { Authorization: token }
-      delete "/api/v1/products/#{product.id}/likes"
+      delete "/api/v1/products/#{product.id}/likes/1"
       expect(response.status).to eq(401)
       end
   end

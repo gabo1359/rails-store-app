@@ -12,7 +12,7 @@ class User::ProductsController < ApplicationController
     @page = params.fetch(:page, 1).to_i
     @total_pages = (Product.count / PRODUCTS_PER_PAGE).ceil
     @tags = %w[Beverages Cereals Dairy Fats Nuts Seeds Sauces Soups Snacks Desserts Miscellaneous]
-    @filters = %w[Name-ascending Name-descending Price-ascending Price-descending Most-liked]
+    @sorts = %w[Name-ascending Name-descending Price-ascending Price-descending Most-liked]
     @pagy, @products = pagy(Products::GetProductsService.call(params), items: PRODUCTS_PER_PAGE)
   end
 
@@ -20,34 +20,6 @@ class User::ProductsController < ApplicationController
     @review = Review.new
     @order = Order.new
   end
-
-  # def new
-  #   @product_form = Product.new
-  # end
-
-  # def create
-  #   @product_form = ProductForm.new(product_params)
-  #   if @product_form.submit
-  #     redirect_to products_path
-  #   else
-  #     render :new
-  #   end
-  # end
-
-  # def edit; end
-
-  # def update
-  #   if @product.update(product_params)
-  #     redirect_to product_path(@product)
-  #   else
-  #     render :edit
-  #   end
-  # end
-
-  # def destroy
-  #   @product.destroy
-  #   redirect_to products_path
-  # end
 
   private
 

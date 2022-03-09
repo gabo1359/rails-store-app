@@ -4,7 +4,7 @@
 class Likes::ApplicationLikeService < ApplicationService
   protected
 
-  def already_liked?
+  def already_liked?(user, product)
     query = Likes::GetLikeQuery.call(user: user, product: product)
     query.exists?
   end

@@ -31,7 +31,7 @@
           <%= button_to 'Like', product_like_path(@product, pre_like), 
               method: :delete, class: 'btn btn-primary btn-like' %>
         <% else %>
-          <%= button_to 'Like', product_likes_path(@product), 
+          <%= button_to 'Like', product_likes_path(@product),
               method: :post, class: 'btn btn-outline-primary btn-like' %>
         <% end %>
       <% end %>

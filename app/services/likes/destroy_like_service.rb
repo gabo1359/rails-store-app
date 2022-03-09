@@ -11,10 +11,8 @@ class Likes::DestroyLikeService < Likes::ApplicationLikeService
   end
 
   def call
-    if already_liked?
+    if already_liked?(user, product)
       like.destroy
-    else
-      flash[:notice] = 'Cannot unlike'
     end
     likes_number = product.likes.count
     product.update(likes_number: likes_number)

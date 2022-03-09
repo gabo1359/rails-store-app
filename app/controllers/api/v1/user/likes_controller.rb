@@ -1,23 +1,15 @@
-class Api::V1::LikesController < Api::V1::BaseController
+class Api::V1::User::LikesController < Api::V1::BaseController
   before_action :find_product
   before_action :find_like, only: [:destroy]
 
   def create
-    @like = Like.new(product_id: @product.id, user_id: @current_user.id) 
+    @like = Likes::CreateLikeService.call(product: @product, user: current_user)
     authorize @like
-    if @like.save
-      likes_number = @product.likes.count
-      @product.update(likes_number: likes_number)
-    else
-      render_error
-    end
   end
 
   def destroy
-    @like.destroy
     authorize @like
-    likes_number = @product.likes.count
-    @product.update(likes_number: likes_number)
+    Likes::DestroyLikeService.call(product: @product, like: @like, user: current_user)
     head :no_content
   end
 

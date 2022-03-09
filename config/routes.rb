@@ -11,20 +11,6 @@ Rails.application.routes.draw do
   end
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  
-  # resources :products do
-  #   resources :reviews, only: :create
-  #   resources :orders, only: :create
-  #   resources :likes
-  # end
-  
-  # resources :reviews, only: [ :update, :destroy ]
-  # resources :orders, only: [ :index, :destroy ]
-  # resources :users_admin, only: [ :new, :create ], :controller => 'users'
-
-  # get 'tags/:tag', to: 'products#index', as: :tag
-  # get 'filter/:filter', to: 'products#index', as: :filter
-
   namespace :admin do
     resources :products, only: [:new, :create, :edit, :update, :destroy] do
       resources :reviews, only: [:update, :destroy]
@@ -37,7 +23,7 @@ Rails.application.routes.draw do
     resources :products, only: [:show, :index] do
       resources :reviews, only: :create
       resources :orders, only: :create
-      resources :likes
+      resources :likes, only: [:create, :destroy]
     end
   end
 
@@ -48,11 +34,18 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       post '/auth/login', to: 'authentication#login'
-      resources :users_admin, only: [ :new, :create, :show, :destroy ], :controller => 'users'
-      resources :orders, only: :index
-      resources :products, only: [:index, :show, :update, :create, :destroy] do
-        resources :orders, only: :create
-        resource :likes
+      namespace :admin do
+        resources :users_admin, only: [:create, :show, :destroy], :controller => 'users'
+        resources :user_reviews, only: [:update, :destroy]
+        resources :products, only: [:create, :update, :destroy]
+      end
+      scope module: :user do
+        resources :user_reviews, only: [:create, :show]
+        resources :orders, only: :index
+        resources :products, only: [:index, :show] do
+          resources :orders, only: :create
+          resources :likes, only: [:create, :destroy]
+        end
       end
     end
   end
