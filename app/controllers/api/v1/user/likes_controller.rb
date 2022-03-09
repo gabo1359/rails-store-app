@@ -22,8 +22,4 @@ class Api::V1::User::LikesController < Api::V1::BaseController
   def find_like
     @like = Like.where(user_id: @current_user.id, product_id: @product.id).first
   end
-
-  def render_error
-    render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
-  end
 end

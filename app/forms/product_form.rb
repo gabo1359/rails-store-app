@@ -3,7 +3,6 @@
 # Product form
 class ProductForm
   include ActiveModel::Model
-  # include ActiveRecord::Validations
 
   attr_accessor :sku, :name, :description, :price, :stock, :tag_list, :tag_ids, :product, :photo
 
@@ -13,10 +12,6 @@ class ProductForm
   validates :price, presence: true
   validates :stock, presence: true, numericality: { only_integer: true }
   validates :tag_ids, presence: true
-
-  # def self.model_name
-  #   ActiveModel::Name.new(self, nil, 'Product')
-  # end
 
   def submit
     return false unless valid?

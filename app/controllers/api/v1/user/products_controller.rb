@@ -24,8 +24,4 @@ class Api::V1::User::ProductsController < Api::V1::BaseController
     params.require(:product).permit(:sku, :name, :description, :price, :stock,
                                     :tag_list, :tag, { tag_ids: [] }, :tag_ids, :photo)
   end
-
-  def render_error
-    render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
-  end
 end

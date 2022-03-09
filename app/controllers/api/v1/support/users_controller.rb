@@ -1,8 +1,9 @@
 # frozen_string_literal: false
 
 # Users controller
-class Api::V1::Admin::UsersController < Api::V1::BaseController
-  before_action :set_user, only: %i[show destroy]
+class Api::V1::Support::UsersController < Api::V1::BaseController
+  before_action :ensure_support!
+  before_action :set_user, only: :show
 
   def create
     @user = User.new(user_params)
@@ -14,15 +15,6 @@ class Api::V1::Admin::UsersController < Api::V1::BaseController
 
   def show; end
 
-  def destroy
-    if @user.discarded?
-      @user.destroy
-    else
-      @user.discard
-      render :show
-    end
-  end
-
   private
 
   def set_user
@@ -33,5 +25,11 @@ class Api::V1::Admin::UsersController < Api::V1::BaseController
   def user_params
     params.require(:user).permit(:email, :password, :first_name, :last_name, :phone, :address,
                                  :password_confirmation, :admin, :support)
+  end
+
+  def ensure_support!
+    unless current_user.support
+      raise CustomError.new('Authorization error', :unauthorized, "You don't have a support role")
+    end
   end
 end

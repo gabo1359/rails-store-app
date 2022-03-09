@@ -39,6 +39,9 @@ Rails.application.routes.draw do
         resources :user_reviews, only: [:update, :destroy]
         resources :products, only: [:create, :update, :destroy]
       end
+      namespace :support do
+        resources :users_admin, only: [:create, :show], :controller => 'users'
+      end
       scope module: :user do
         resources :user_reviews, only: [:create, :show]
         resources :orders, only: :index

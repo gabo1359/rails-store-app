@@ -21,7 +21,7 @@ class Admin::ProductsController < ApplicationController
   def edit; end
 
   def update
-    @product_form = ProductForm.new({ **product_params, product: @product })
+    @product_form = @product
     if @product_form.update?
       redirect_to product_path(@product)
     else

@@ -5,7 +5,7 @@
 <% if @product.photo.key %>
   <%= cl_image_tag("#{@product.photo.key}", width: 200) %>
 <% else %>
-  <%= image_tag('coca_cola.png', style: 'width: 200px') %>
+  <img src='http://localhost:3000/assets/coca_cola.png' style='width: 200px' >
 <% end %>
 
 <p><%= link_to 'Order now', product_url(@product) %></p>

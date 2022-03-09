@@ -9,8 +9,6 @@ class Api::V1::User::UserReviewsController < Api::V1::BaseController
     authorize @user_review
     if @user_review.save
       render :show
-    else
-      render_error
     end
   end
 
@@ -19,8 +17,6 @@ class Api::V1::User::UserReviewsController < Api::V1::BaseController
   def update
     if @user_review.update(user_review_params)
       render :show
-    else
-      render_error
     end
   end
 
@@ -33,9 +29,5 @@ class Api::V1::User::UserReviewsController < Api::V1::BaseController
 
   def user_review_params
     params.require(:user_review).permit(:title, :content, :for_user, :approved)
-  end
-
-  def render_error
-    render json: { errors: @user_review.errors.full_messages }, status: :unprocessable_entity
   end
 end

@@ -1,6 +1,7 @@
 class Api::V1::Admin::ProductsController < Api::V1::BaseController
   include Pagy::Backend
 
+  before_action :ensure_admin!
   before_action :set_product, only: [:show, :update, :destroy]
 
   def create 
@@ -8,8 +9,6 @@ class Api::V1::Admin::ProductsController < Api::V1::BaseController
     authorize @product
     if @product.save
       render :show
-    else
-      render_error
     end
   end
 
@@ -18,8 +17,6 @@ class Api::V1::Admin::ProductsController < Api::V1::BaseController
   def update
     if @product.update(product_params)
       render :show
-    else
-      render_error
     end
   end
 
@@ -44,7 +41,9 @@ class Api::V1::Admin::ProductsController < Api::V1::BaseController
                                     :tag_list, :tag, { tag_ids: [] }, :tag_ids, :photo)
   end
 
-  def render_error
-    render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
+  def ensure_admin!
+    unless current_user.admin
+      raise CustomError.new('Authorization error', :unauthorized, "You're not an admin")
+    end
   end
 end
