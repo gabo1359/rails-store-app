@@ -5,11 +5,12 @@ class Api::V1::Admin::ProductsController < Api::V1::BaseController
   before_action :set_product, only: [:show, :update, :destroy]
 
   def create 
-    @product = Product.new(product_params)
+    @product = ProductForm.new(product_params).submit
     authorize @product
-    if @product.save
-      render :show
-    end
+    render :show
+
+    # Using representers    
+    # render json: ProductsRepresenter.new([@product]).as_json
   end
 
   def show; end

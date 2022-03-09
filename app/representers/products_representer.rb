@@ -9,7 +9,9 @@ class ProductsRepresenter
         id: product.id,
         sku: product.sku,
         name: product.name,
-        description: product.description
+        description: product.description,
+        price: product.price,
+        stock: product.stock
       }
     end
   end

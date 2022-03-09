@@ -5,11 +5,9 @@ class Api::V1::Admin::UsersController < Api::V1::BaseController
   before_action :set_user, only: %i[show destroy]
 
   def create
-    @user = User.new(user_params)
+    @user = UserForm.new(user_params).submit
     authorize @user
-    if @user.save
-      render :show
-    end
+    render :show
   end
 
   def show; end

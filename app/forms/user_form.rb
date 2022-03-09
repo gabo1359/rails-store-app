@@ -19,7 +19,10 @@ class UserForm
   end
 
   def submit
-    return false unless valid?
+    unless valid?
+      raise CustomError.new('Validation error', :unprocessable_entity, "Wrong argument")
+    end
+    
     User.create({first_name: first_name, last_name: last_name, address: address, phone: phone,
               email: email, password: password, password_confirmation: password_confirmation,
               admin: admin, support: support})

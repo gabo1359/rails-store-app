@@ -11,20 +11,22 @@ class ProductForm
   validates :description, presence: true
   validates :price, presence: true
   validates :stock, presence: true, numericality: { only_integer: true }
-  validates :tag_ids, presence: true
 
   def submit
-    return false unless valid?
+    unless valid?
+      raise CustomError.new('Validation error', :unprocessable_entity, "Wrong argument")
+    end
 
     Product.create(sku: sku, name: name, description: description, price:  price, stock: stock,
                    tag_ids: tag_ids, photo: photo)
-    true
   end
 
-  def update?
-    return false unless valid?
+  def update
+    unless valid?
+      raise CustomError.new('Validation error', :unprocessable_entity, "Wrong argument")
+    end
+
     product.update(sku: sku, name: name, description: description, price:  price, stock: stock,
                    tag_ids: tag_ids, photo: photo)
-    true
   end
 end

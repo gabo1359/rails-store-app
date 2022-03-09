@@ -1,6 +1,6 @@
 json.extract! @product, :id, :sku, :name, :description, :price, :stock, :likes_number, :tag_list
 
-json.image @product.photo.url
+json.image @product.photo.url ? @product.photo.url : 'http://localhost:3000/assets/coca_cola.png'
 
 json.discard do
   json.state @product.discarded_at ? true : false

@@ -37,7 +37,7 @@ Rails.application.routes.draw do
       namespace :admin do
         resources :users_admin, only: [:create, :show, :destroy], :controller => 'users'
         resources :user_reviews, only: [:update, :destroy]
-        resources :products, only: [:create, :update, :destroy]
+        resources :products, only: [:create, :show, :update, :destroy]
       end
       namespace :support do
         resources :users_admin, only: [:create, :show], :controller => 'users'
