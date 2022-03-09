@@ -46,7 +46,7 @@ Rails.application.routes.draw do
         resources :user_reviews, only: [:create, :show]
         resources :orders, only: :index
         resources :products, only: [:index, :show] do
-          resources :orders, only: :create
+          resources :orders, only: [:create, :show]
           resources :likes, only: [:create, :destroy]
         end
       end

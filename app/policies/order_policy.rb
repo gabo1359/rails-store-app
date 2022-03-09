@@ -4,4 +4,8 @@ class OrderPolicy < ApplicationPolicy
       scope.all
     end
   end
+
+  def create?
+    user.present?
+  end
 end
