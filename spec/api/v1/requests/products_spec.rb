@@ -59,7 +59,7 @@ RSpec.describe 'Products API', type: :request do
 
   describe 'PATCH product' do
     it 'should update a product' do
-      user = create(:user)
+      user = create(:user, admin: true)
       post '/api/v1/auth/login', params: { email: user.email, password: user.password }
       product = create(:product)
       patch "/api/v1/admin/products/#{product.id}", headers: { Authorization: JSON.parse(response.body)['token'] }, 
@@ -76,7 +76,7 @@ RSpec.describe 'Products API', type: :request do
 
   describe 'POST product' do
     it 'should create a product' do
-      user = create(:user)
+      user = create(:user, admin: true)
       post '/api/v1/auth/login', params: { email: user.email, password: user.password }
       post "/api/v1/admin/products", headers: { Authorization: JSON.parse(response.body)['token'] }, 
                                               params: { 'product': attributes_for(:product) }
@@ -92,7 +92,7 @@ RSpec.describe 'Products API', type: :request do
 
   describe 'DELETE product' do
     it 'should delete a product' do
-      user = create(:user)
+      user = create(:user, admin: true)
       post '/api/v1/auth/login', params: { email: user.email, password: user.password }
       product = create(:product)
       delete "/api/v1/admin/products/#{product.id}", headers: { Authorization: JSON.parse(response.body)['token'] }

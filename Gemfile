@@ -80,3 +80,4 @@ gem 'sidekiq-failures', '~> 1.0'
 gem "discard", "~> 1.2"
 gem 'representable'
 gem 'multi_json'
+gem 'stripe'
