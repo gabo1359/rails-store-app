@@ -15,6 +15,20 @@ class User::OrdersController < ApplicationController
     @order = Orders::CreateOrderService.call(product_id: params[:product_id],
                                              quantity: order_params[:quantity],
                                              user: current_user)
+
+    # session = Stripe::Checkout::Session.create(
+    #     payment_method_types: ['card'],
+    #     line_items: [{
+    #       name: teddy.sku,
+    #       images: [teddy.photo_url],
+    #       amount: teddy.price_cents,
+    #       currency: 'eur',
+    #       quantity: 1
+    #     }],
+    #     success_url: order_url(order),
+    #     cancel_url: order_url(order)
+    #   )
+
     if @order.save
       redirect_to orders_path
     else
