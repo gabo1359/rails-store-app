@@ -19,7 +19,9 @@ Rails.application.routes.draw do
 
   scope module: :user do
     root to: 'pages#home'
-    resources :orders, only: [ :index, :destroy ]
+    resources :orders, only: [ :index, :show, :destroy ] do
+      resources :payments, only: :new
+    end
     resources :products, only: [:show, :index] do
       resources :reviews, only: :create
       resources :orders, only: :create
