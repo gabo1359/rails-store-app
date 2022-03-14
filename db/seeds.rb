@@ -71,7 +71,6 @@ User.create(
     stock: rand(10..50),
     tag_list: tag_list.join(', ')
   })
-
   product.reviews.create({
     title: 'Excellent product!', 
     content: 'Some description for the product', 

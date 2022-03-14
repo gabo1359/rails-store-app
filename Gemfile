@@ -81,3 +81,4 @@ gem "discard", "~> 1.2"
 gem 'representable'
 gem 'multi_json'
 gem 'stripe'
+gem 'stripe_event'

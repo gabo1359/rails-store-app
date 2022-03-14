@@ -1,0 +1,24 @@
+<div class='order-container'>
+    <div class="card text-center">
+    <div class="card-header">
+        <h2 style='margin: 0px'>Your order will be processing!</h2>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title"><%= @order.product.name %> <small><span class="badge badge-primary"><%= @order.state %></span></small></h5>
+        <div><%= image_tag @order.product.photo.url, width: '20%' %></div>
+        <div class="col">
+            <ul class="list-unstyled">
+                <li><strong>Issued on: </strong> <%= @order.created_at.to_date %></li>
+                <li><strong>SKU: </strong> <%= @order.product.sku %></li>
+                <li><strong>Total: </strong>$ <%= @order.total %></li>
+            </ul>
+        </div>
+        </div>
+    <div class="card-footer text-muted">
+      <p style='margin-bottom: 0px'>Estimated delivery in <strong>2 business days.</strong></p>
+    </div>
+    </div>
+</div>
+<div class='text-center' style='margin-top: -20px; margin-bottom: 50px'>
+    <%= link_to 'See all my orders', orders_path, class: "btn btn-primary" %>
+</div>

@@ -10,6 +10,7 @@
         <th scope="col">Quantity</th>
         <th scope="col">Total</th>
         <th scope="col">Date</th>
+        <th scope="col">State</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -23,12 +24,21 @@
         <td><%= order.quantity %></td>
         <td>$ <%= order.product.price * order.quantity %></td>
         <td><%= order.created_at.utc.localtime("-05:00").strftime("%h %d, %Y - %I:%M %p") %></td>
-        <td>  
-          <%= link_to "Remove",
+        <td>
+          <% if order.state == 'pending' %>
+           <%= link_to 'Pending', new_order_payment_path(order) %>
+          <% else %>
+            <p style='margin-bottom: 0px; color: green'><%= order.state.to_s.capitalize %></p>
+          <% end %>
+        </td>
+        <td>
+          <% if order.state == 'pending' %>
+            <%= link_to "Remove",
                   order_path(order, :order_id => order),
                   method: :delete,
                   class: 'order-remove',
                   data: { confirm: "Are you sure?" } %>
+          <% end %>
         </td>
       </tr>
     <% end %>
@@ -41,6 +51,7 @@
           <td style='background-color: #343A3F'></td>
           <td class='order-total'>TOTAL</td>
           <td class='order-total-amount'>$ <%= @total_amount %></td>
+          <td style='background-color: #343A3F'></td>
           <td style='background-color: #343A3F'></td>
           <td style='background-color: #343A3F'></td>
         </tr>

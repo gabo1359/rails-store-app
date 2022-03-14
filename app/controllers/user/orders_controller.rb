@@ -2,7 +2,11 @@
 
 # Orders controller
 class User::OrdersController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[index create destroy]
+  skip_before_action :authenticate_user!, only: %i[index show create destroy]
+
+  def show
+    @order = current_user.orders.find(params[:id])
+  end
 
   def index
     @total_amount = 0
@@ -12,28 +16,25 @@ class User::OrdersController < ApplicationController
   end
 
   def create
-    @order = Orders::CreateOrderService.call(product_id: params[:product_id],
+    product = Product.find(params[:product_id])
+    order = Orders::CreateOrderService.call(product_id: product.id,
                                              quantity: order_params[:quantity],
                                              user: current_user)
+    session = Stripe::Checkout::Session.create(
+        payment_method_types: ['card'],
+        line_items: [{
+          name: product.name,
+          images: [product.photo.url],
+          amount: (product.price * 100).to_i,
+          currency: 'usd',
+          quantity: order.quantity
+        }],
+        success_url: 'http://localhost:3000' + order_path(order),
+        cancel_url: 'http://localhost:3000' + product_path(product)
+      )
 
-    # session = Stripe::Checkout::Session.create(
-    #     payment_method_types: ['card'],
-    #     line_items: [{
-    #       name: teddy.sku,
-    #       images: [teddy.photo_url],
-    #       amount: teddy.price_cents,
-    #       currency: 'eur',
-    #       quantity: 1
-    #     }],
-    #     success_url: order_url(order),
-    #     cancel_url: order_url(order)
-    #   )
-
-    if @order.save
-      redirect_to orders_path
-    else
-      render 'products/show'
-    end
+      order.update(checkout_session_id: session.id)
+      redirect_to new_order_payment_path(order)
   end
 
   def destroy

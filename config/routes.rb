@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
   
+  mount StripeEvent::Engine, at: '/stripe-webhooks'
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   namespace :admin do
     resources :products, only: [:new, :create, :edit, :update, :destroy] do

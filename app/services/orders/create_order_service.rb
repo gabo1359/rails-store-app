@@ -14,7 +14,9 @@ class Orders::CreateOrderService < ApplicationService
     product = Product.find(product_id)
     order = Order.new(quantity: quantity)
     order.product = product
+    order.state = 'pending'
     order.user = user.nil? ? User.find(2) : user
+    order.total = order.quantity * order.product.price
     product.stock -= order.quantity
     product.save
    
@@ -22,6 +24,7 @@ class Orders::CreateOrderService < ApplicationService
       NotifyUserForLowStockJob.perform_later(product_id)
     end
 
+    order.save
     order
   end
 end

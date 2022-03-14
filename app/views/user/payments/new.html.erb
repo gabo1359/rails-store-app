@@ -1,0 +1,33 @@
+<div class='order-container'>
+    <div class="card text-center">
+    <div class="card-header">
+        <h2 style='margin: 0px'>Checkout summary</h2>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title"><%= @order.product.name %> <small><span class="badge badge-primary"><%= @order.state %></span></small></h5>
+        <div><%= image_tag @order.product.photo.url, width: '20%' %></div>
+        <div class="col">
+            <ul class="list-unstyled">
+                <li><strong>Unit price: </strong>$ <%= @order.product.price %></li>
+                <li><strong>Quantity: </strong> <%= @order.quantity %></li>
+            </ul>
+        </div>
+        <button id="pay" class="btn btn-primary">Total pay: $<%= @order.total %></button>
+
+        <script src="https://js.stripe.com/v3/"></script>
+        <script>
+          const paymentButton = document.getElementById('pay');
+          paymentButton.addEventListener('click', () => {
+            const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
+            stripe.redirectToCheckout({
+              sessionId: '<%= @order.checkout_session_id %>'
+            });
+          });
+        </script>
+
+    </div>
+    <div class="card-footer text-muted">
+      <p style='margin-bottom: 0px'>Estimated delivery in <strong>2 business days.</strong></p>
+    </div>
+    </div>
+</div>
