@@ -35,6 +35,8 @@ gem 'font-awesome-sass'
 gem 'simple_form'
 
 group :development, :test do
+  gem 'rswag'
+  gem "rswag-specs"
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'pry-byebug'
@@ -74,8 +76,6 @@ gem 'cloudinary', '~> 1.16.0'
 gem 'pagy', '~> 5.10' # omit patch digit
 gem 'pundit'
 gem 'jwt'
-gem 'rswag'
-gem "rswag-specs"
 gem 'sidekiq'
 gem 'sidekiq-failures', '~> 1.0'
 gem "discard", "~> 1.2"
