@@ -41,7 +41,6 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
-  gem "rswag-specs"
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
@@ -75,6 +74,7 @@ gem 'pagy', '~> 5.10' # omit patch digit
 gem 'pundit'
 gem 'jwt'
 gem 'rswag'
+gem "rswag-specs"
 gem 'sidekiq'
 gem 'sidekiq-failures', '~> 1.0'
 gem "discard", "~> 1.2"
