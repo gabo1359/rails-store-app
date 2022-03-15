@@ -35,8 +35,6 @@ gem 'font-awesome-sass'
 gem 'simple_form'
 
 group :development, :test do
-  gem 'rswag'
-  gem "rswag-specs"
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'pry-byebug'
@@ -47,6 +45,9 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
 
+  gem 'rswag'
+  gem "rswag-specs"
+  
 group :development do
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
