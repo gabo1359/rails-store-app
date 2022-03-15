@@ -34,7 +34,7 @@ gem 'autoprefixer-rails', '10.2.5'
 gem 'font-awesome-sass'
 gem 'simple_form'
 
-group :development, :test do
+# group :development, :test do
   gem 'rswag'
   gem "rswag-specs"
   gem 'dotenv-rails'
@@ -45,7 +45,7 @@ group :development, :test do
   gem 'rspec-rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-end
+# end
 
 group :development do
   # Display performance information such as SQL time and flame graphs for each request in your browser.
