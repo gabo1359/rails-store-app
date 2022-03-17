@@ -20,21 +20,10 @@ class User::OrdersController < ApplicationController
     order = Orders::CreateOrderService.call(product_id: product.id,
                                              quantity: order_params[:quantity],
                                              user: current_user)
-    session = Stripe::Checkout::Session.create(
-        payment_method_types: ['card'],
-        line_items: [{
-          name: product.name,
-          images: [product.photo.url],
-          amount: (product.price * 100).to_i,
-          currency: 'usd',
-          quantity: order.quantity
-        }],
-        success_url: 'http://localhost:3000/' + order_path(order),
-        cancel_url: 'http://localhost:3000/' + product_path(product)
-      )
-
-      order.update(checkout_session_id: session.id)
-      redirect_to new_order_payment_path(order)
+    
+    session = Payments::CreateStripeCheckoutService.call(product: product, order: order)
+    order.update(checkout_session_id: session.id)
+    redirect_to new_order_payment_path(order)
   end
 
   def destroy
