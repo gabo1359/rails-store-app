@@ -29,8 +29,8 @@ class User::OrdersController < ApplicationController
           currency: 'usd',
           quantity: order.quantity
         }],
-        success_url: 'https://rails-store-app.herokuapp.com' + order_path(order),
-        cancel_url: 'https://rails-store-app.herokuapp.com' + product_path(product)
+        success_url: 'http://localhost:3000/' + order_path(order),
+        cancel_url: 'http://localhost:3000/' + product_path(product)
       )
 
       order.update(checkout_session_id: session.id)
