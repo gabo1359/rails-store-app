@@ -78,3 +78,5 @@ User.create(
     user_id: 3
   })
 end
+
+puts 'Successfully seed!'

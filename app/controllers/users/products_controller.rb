@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 # Products controller
-class User::ProductsController < ApplicationController
+class Users::ProductsController < ApplicationController
   
   before_action :set_product, only: %i[show edit update destroy]
   skip_before_action :authenticate_user!, only: %i[index show]

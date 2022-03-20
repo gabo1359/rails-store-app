@@ -26,7 +26,7 @@ development:
   database: rails_store_app_development
   username: gabriel
   password: gabriel
-  host: database
+  # host: database
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.

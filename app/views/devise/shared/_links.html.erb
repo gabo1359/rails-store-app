@@ -19,7 +19,12 @@
 <% end %>
 
 <%- if devise_mapping.omniauthable? %>
+  <br/><br/>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), method: :post %><br />
+    <% pretty_provider = provider.to_s == 'google_oauth2' ? "Google": provider %>
+    <%= link_to "Sign in with #{OmniAuth::Utils.camelize(pretty_provider)}", omniauth_authorize_path(resource_name, provider), method: :post,
+       style: "#{pretty_provider == 'Google' ? 
+        'text-decoration: none; background-color: #C84130; color: white; padding: 10px 30px; border-radius: 5px' :
+        'text-decoration: none; background-color: #3D62BA; color: white; padding: 10px 30px; border-radius: 5px'}" %><br /><br />
   <% end %>
 <% end %>

@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 # Likes controller
-class User::LikesController < ApplicationController
+class Users::LikesController < ApplicationController
   before_action :find_product
   before_action :find_like, only: [:destroy]
 

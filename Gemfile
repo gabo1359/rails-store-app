@@ -80,3 +80,7 @@ gem 'sidekiq-failures', '~> 1.0'
 gem "discard", "~> 1.2"
 gem 'stripe'
 gem 'stripe_event'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'

@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 # Reviews controller
-class User::ReviewsController < ApplicationController
+class Users::ReviewsController < ApplicationController
   def create
     @product = Product.find(params[:product_id])
     @review = Reviews::CreateReviewService.call(product: @product,

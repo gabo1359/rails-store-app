@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # mount Rswag::Ui::Engine => '/api-docs'
   # mount Rswag::Api::Engine => '/api-docs'
 
-  devise_for :users
+  devise_for :users, controllers: {omniauth_callbacks: 'users/omniauth_callbacks'}
 
   require 'sidekiq/web'
 
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     end
   end
 
-  scope module: :user do
+  scope module: :users do
     root to: 'pages#home'
     resources :orders, only: [ :index, :show, :destroy ] do
       resources :payments, only: :new
