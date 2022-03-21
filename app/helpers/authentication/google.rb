@@ -1,9 +1,9 @@
 require 'net/http'
 
 module Authentication
-  class Facebook
+  class Google
     GOOGLE_URL = 'https://www.googleapis.com/oauth2/v4/token'
-    FACEBOOK_USER_FIELDS = 'userinfo.email, userinfo.profile'
+    GOOGLE_USER_FIELDS = 'userinfo.email, userinfo.profile'
 
     def initialize(access_token)
       @access_token = access_token
