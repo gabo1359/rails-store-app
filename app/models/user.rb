@@ -13,6 +13,16 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook google_oauth2]
 
+  has_many :access_grants,
+           class_name: 'Doorkeeper::AccessGrant',
+           foreign_key: :resource_owner_id,
+           dependent: :delete_all # or :destroy if you need callbacks
+
+  has_many :access_tokens,
+           class_name: 'Doorkeeper::AccessToken',
+           foreign_key: :resource_owner_id,
+           dependent: :delete_all # or :destroy if you need callbacks
+
   def self.from_omniauth(auth)
     name_split = auth.info.name
     # This line checks if the user email received by the Omniauth is already included in our databases.
