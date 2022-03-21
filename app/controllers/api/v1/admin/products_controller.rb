@@ -4,13 +4,11 @@ class Api::V1::Admin::ProductsController < Api::V1::BaseController
   before_action :ensure_admin!
   before_action :set_product, only: [:show, :update, :destroy]
 
-  def create 
-    @product = ProductForm.new(product_params).submit
-    authorize @product
-    render :show
-
-    # Using representers    
-    # render json: ProductsRepresenter.new([@product]).as_json
+  def create
+    # p product_params.to_hash
+    result = Operation::Product::Create.call(params: product_params.to_hash, errors: {})
+# p result
+    # render json: { data: { product: result[:model].to_json } }
   end
 
   def show; end
