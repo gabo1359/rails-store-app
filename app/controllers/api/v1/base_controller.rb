@@ -1,6 +1,6 @@
 class Api::V1::BaseController < ActionController::API
   include ErrorHandler
-  include Pundit
+  include Pundit::Authorization
 
   before_action :authorize_request, only: [:create, :update, :destroy]
 
